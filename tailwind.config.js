@@ -1,5 +1,4 @@
-// tailwind.config.js
-export default {
+module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -9,6 +8,10 @@ export default {
       colors: {
         black: '#000000',
         gold: '#C4A962',
+      },
+      transitionProperty: {
+        'height': 'height',
+        'spacing': 'margin, padding',
       },
     },
   },
