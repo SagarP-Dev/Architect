@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply bg-black text-white font-sans;
+  }
+}
+
+.nav-link {
+  @apply relative text-sm uppercase tracking-wider font-medium text-white/80 hover:text-white transition-colors duration-300;
+}
+
+.nav-link::after {
+  content: '';
+  @apply absolute left-0 -bottom-1 w-0 h-[1px] bg-[#C4A962] transition-all duration-300;
+}
+
+.nav-link:hover::after {
+  @apply w-full;
+}
+
+.social-link {
+  @apply w-8 h-8 flex items-center justify-center rounded-full border border-[#C4A962] text-[#C4A962] hover:bg-[#C4A962] hover:text-white transition-all duration-300;
+}
+
+.hero-title {
+  @apply text-[#C4A962] font-serif;
+}
+
+.contact-button {
+  @apply px-8 py-3 bg-[#C4A962] text-white uppercase tracking-wider text-sm font-medium hover:bg-[#9F885A] transition-colors duration-300 rounded;
+}
+
+@font-face {
+  font-family: 'Marcellus';
+  src: url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+}
