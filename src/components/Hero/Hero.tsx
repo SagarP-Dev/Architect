@@ -23,7 +23,7 @@ export default function Hero() {
           className="max-w-5xl"
         >
           <h1 className="hero-title text-5xl md:text-7xl lg:text-8xl mb-6">
-            "Name"
+            Ecoscape
             <span className="block text-3xl md:text-4xl lg:text-5xl mt-4 font-light italic text-white">
               Architect
             </span>

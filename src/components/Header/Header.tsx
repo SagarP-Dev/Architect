@@ -4,13 +4,31 @@ import { Menu, X } from 'lucide-react';
 import MobileMenu from './MobileMenu';
 import SocialLinks from './SocialLinks';
 
-// Explicitly type the logo variable with union type
-let logo: string | null;
-try {
-  logo = '/logo.jpg'; // Path to your logo in public folder
-} catch {
-  logo = null; // Will use placeholder if logo not found
-}
+// Logo Component
+const Logo = () => {
+  const [logoError, setLogoError] = useState(false);
+  const logoPath = '/WhatsApp Image 2025-03-31 at 11.55.57_354e1db8.jpg'; // Ensure logo path is correct
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="flex items-center justify-center w-16 h-16 rounded-full bg-[#C4A962]"
+    >
+      {!logoError ? (
+        <img 
+          src={logoPath}
+          alt="Company Logo" 
+          className="w-full h-full rounded-full object-cover"
+          onError={() => setLogoError(true)}
+        />
+      ) : (
+        <span className="text-white font-bold text-xl">SB</span>
+      )}
+    </motion.div>
+  );
+};
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,7 +43,8 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  // ✅ Added explicit typing for TypeScript
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {  
     e.preventDefault();
     const href = e.currentTarget.getAttribute('href');
     if (href) {
@@ -47,28 +66,14 @@ export default function Header() {
   return (
     <>
       <SocialLinks />
-      <nav className={`fixed w-full py-6 px-6 lg:px-12 flex justify-between items-center z-40 transition-all duration-300 ${isScrolled ? 'bg-black' : 'bg-black/50'}`}>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center justify-center w-12 h-12 rounded-full bg-[#C4A962]"
-        >
-          {logo ? (
-            <img 
-              src={logo}
-              alt="Company Logo" 
-              className="w-full h-full rounded-full object-cover"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                logo = null; // Fallback to initials if image fails to load
-              }}
-            />
-          ) : (
-            <span className="text-white font-bold text-lg">SB</span>
-          )}
-        </motion.div>
+
+      {/* Navbar */}
+      <nav
+        className={`fixed w-full py-6 px-6 lg:px-12 flex justify-between items-center z-40 transition-all duration-300 ${
+          isScrolled ? 'bg-black shadow-lg' : 'bg-transparent'
+        }`}
+      >
+        <Logo />
 
         {/* Desktop Menu */}
         <motion.div
@@ -81,21 +86,26 @@ export default function Header() {
             <a 
               key={item}
               href={`#${item}`} 
-              className="nav-link" 
+              className="nav-link text-white hover:text-[#C4A962] transition-colors duration-300" 
               onClick={handleNavClick}
             >
               {item.charAt(0).toUpperCase() + item.slice(1)}
             </a>
           ))}
-          <button className="contact-button ml-4">
+          <a 
+            href="#contact" 
+            className="px-8 py-3 bg-[#C4A962] text-white uppercase tracking-wider text-sm font-medium hover:bg-[#9F885A] transition-colors duration-300 rounded-full ml-4"
+            onClick={handleNavClick}
+          >
             Contact Us
-          </button>
+          </a>
         </motion.div>
 
         {/* Mobile Menu Button */}
         <button 
           className="md:hidden text-[#C4A962]"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
