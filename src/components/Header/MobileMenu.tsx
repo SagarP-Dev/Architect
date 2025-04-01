@@ -9,7 +9,7 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const href = e.currentTarget.getAttribute('href');
-    if (href) {
+    if (href && href.startsWith('#')) {
       const element = document.querySelector(href);
       if (element) {
         const offset = 80;
@@ -24,6 +24,30 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
     }
     onClose();
   };
+
+  // Social media URLs (replace with your actual links)
+  const socialLinks = [
+    {
+      icon: <Instagram size={16} />,
+      url: 'https://www.instagram.com/_sagar_panigrahi__/',
+      label: 'Instagram'
+    },
+    {
+      icon: <Facebook size={16} />,
+      url: 'https://www.facebook.com/sagar.panigrahi.182',
+      label: 'Facebook'
+    },
+    {
+      icon: <Linkedin size={16} />,
+      url: 'https://www.linkedin.com/in/sagar-trushna-panigrahi-079b6727a/',
+      label: 'LinkedIn'
+    },
+    {
+      icon: <Youtube size={16} />,
+      url: 'https://www.youtube.com/yourchannel',
+      label: 'YouTube'
+    }
+  ];
 
   return (
     <motion.div 
@@ -44,14 +68,28 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
             {item.charAt(0).toUpperCase() + item.slice(1)}
           </a>
         ))}
-        <button className="contact-button mt-4">
+        
+        <a 
+          href="#contact" 
+          className="contact-button mt-4"
+          onClick={handleNavClick}
+        >
           Contact Us
-        </button>
+        </a>
+
         <div className="flex gap-6 mt-8">
-          <a href="#" className="social-link"><Instagram size={16} /></a>
-          <a href="#" className="social-link"><Facebook size={16} /></a>
-          <a href="#" className="social-link"><Linkedin size={16} /></a>
-          <a href="#" className="social-link"><Youtube size={16} /></a>
+          {socialLinks.map((social) => (
+            <a
+              key={social.label}
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-link"
+              aria-label={`Visit our ${social.label} profile`}
+            >
+              {social.icon}
+            </a>
+          ))}
         </div>
       </div>
     </motion.div>
