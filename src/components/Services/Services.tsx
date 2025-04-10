@@ -36,8 +36,7 @@ export default function Services() {
             >
               <h3 className="text-2xl font-serif text-[#C4A962] mb-4">{service}</h3>
               <p className="text-gray-400">
-                Crafting exceptional spaces that blend functionality with aesthetic excellence,
-                tailored to your unique vision and requirements.
+              We believe your home should tell the story of who you are — a curated reflection of your personality, dreams, and lifestyle. Our design is more than aesthetics; it's about creating spaces that feel like home.
               </p>
             </motion.div>
           ))}

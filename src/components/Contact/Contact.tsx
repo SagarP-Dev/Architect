@@ -59,7 +59,17 @@ export default function Contact() {
   </p>
               <p><span className="font-semibold text-white">Phone:</span> +91 94383 54999</p>
               <p><span className="font-semibold text-white">Phone:</span> +91 98610 49234</p>
-              <p><span className="font-semibold text-white">Location:</span> </p>
+              <p>
+    <span className="font-semibold text-white">Location:</span>{' '}
+    <a
+      href="https://www.google.com/maps?q=FWQH%2BGWG+Balasore,+Odisha"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-[#C4A962] underline hover:text-[#d4bb7c] transition"
+    >
+      View on Map
+    </a>
+  </p>
             </div>
           </div>
 

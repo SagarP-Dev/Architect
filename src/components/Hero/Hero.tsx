@@ -25,7 +25,7 @@ export default function Hero() {
           <h1 className="hero-title text-5xl md:text-7xl lg:text-8xl mb-6">
             Ecoscape
             <span className="block text-3xl md:text-4xl lg:text-5xl mt-4 font-light italic text-white">
-              Architect
+              Developer
             </span>
           </h1>
           <p className="text-lg md:text-xl text-gray-300 max-w-2xl">

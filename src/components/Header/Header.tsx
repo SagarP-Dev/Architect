@@ -4,7 +4,6 @@ import { Menu, X } from 'lucide-react';
 import MobileMenu from './MobileMenu';
 import SocialLinks from './SocialLinks';
 
-
 const Logo = () => {
   const [logoError, setLogoError] = useState(false);
   const logoPath = '/WhatsApp Image 2025-03-31 at 11.55.57_354e1db8.jpg';
@@ -43,7 +42,6 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {  
     e.preventDefault();
     const href = e.currentTarget.getAttribute('href');
@@ -67,7 +65,6 @@ export default function Header() {
     <>
       <SocialLinks />
 
-      
       <nav
         className={`fixed w-full py-6 px-6 lg:px-12 flex justify-between items-center z-40 transition-all duration-300 ${
           isScrolled ? 'bg-black shadow-lg' : 'bg-transparent'
@@ -75,14 +72,13 @@ export default function Header() {
       >
         <Logo />
 
-        
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="hidden md:flex items-center gap-12"
         >
-          {['home', 'projects', 'services', 'media', 'career', 'blog', 'about'].map((item) => (
+          {['home', 'projects', 'services', 'about'].map((item) => (
             <a 
               key={item}
               href={`#${item}`} 
@@ -101,7 +97,6 @@ export default function Header() {
           </a>
         </motion.div>
 
-       
         <button 
           className="md:hidden text-[#C4A962]"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -111,7 +106,6 @@ export default function Header() {
         </button>
       </nav>
 
-     
       {isMenuOpen && <MobileMenu onClose={() => setIsMenuOpen(false)} />}
     </>
   );
