@@ -78,14 +78,14 @@ export default function Header() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="hidden md:flex items-center gap-12"
         >
-          {['home', 'projects', 'services', 'about'].map((item) => (
+          {['home', 'our-works', 'services', 'about'].map((item) => (
             <a 
               key={item}
               href={`#${item}`} 
               className="nav-link text-white hover:text-[#C4A962] transition-colors duration-300" 
               onClick={handleNavClick}
             >
-              {item.charAt(0).toUpperCase() + item.slice(1)}
+              {item === 'our-works' ? 'Our Works' : item.charAt(0).toUpperCase() + item.slice(1)}
             </a>
           ))}
           <a 

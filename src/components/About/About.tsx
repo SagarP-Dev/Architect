@@ -15,14 +15,14 @@ export default function About() {
         <div className="grid grid-cols-1 gap-10 text-gray-400 leading-relaxed text-lg">
           {/* Introduction */}
           <p>
-            Welcome to our digital space! We’re passionate about crafting exceptional web experiences that blend design, functionality, and performance. Our team brings creativity and technical expertise together to deliver impactful solutions.
+          Welcome to our creative studio where design meets lifestyle. We're dedicated to crafting timeless and functional spaces that reflect individuality, purpose, and harmony. From cozy homes to impactful commercial environments, our approach blends aesthetics with intentional design.
           </p>
 
           {/* Mission */}
           <div>
             <h3 className="text-2xl font-semibold text-white mb-2">Our Mission</h3>
             <p>
-              Our mission is to empower individuals and businesses by building innovative, scalable, and user-friendly digital products. We believe in clean code, purposeful design, and long-term collaboration.
+            Our mission is to elevate everyday spaces through thoughtful and elegant design solutions. We aim to transform visions into reality by creating environments that are not only visually stunning but deeply personal and practical.
             </p>
           </div>
 
@@ -30,7 +30,7 @@ export default function About() {
           <div>
             <h3 className="text-2xl font-semibold text-white mb-2">Who We Are</h3>
             <p>
-              We are a small but dynamic team of full-stack developers, UI/UX designers, and creative thinkers based in Balasore, Odisha. With a strong foundation in the MERN stack, we specialize in building responsive websites, web applications, and interactive user interfaces.
+            We are a passionate team of interior designers, architects, and space planners based in Balasore, Odisha. With a strong portfolio in Residential Design, Commercial Design, and Interior Styling, we bring ideas to life through collaboration, creativity, and attention to detail. Every project we take on is tailored to reflect the unique needs and personality of our clients.
             </p>
           </div>
 
@@ -38,7 +38,7 @@ export default function About() {
           <div>
             <h3 className="text-2xl font-semibold text-white mb-2">Our Vision</h3>
             <p>
-              To become a trusted name in digital transformation by consistently delivering top-tier web solutions that adapt to a rapidly evolving tech landscape.
+            To become a leading name in interior and architectural design by delivering meaningful, modern, and human-centric spaces that stand the test of time. We strive to inspire through design and create environments that people love to live and work in.
             </p>
           </div>
         </div>

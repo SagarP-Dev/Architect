@@ -57,14 +57,14 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
       className="fixed inset-0 bg-black z-30 md:hidden pt-24"
     >
       <div className="flex flex-col items-center gap-8 p-8">
-        {['home', 'projects', 'services', 'about'].map((item) => (
+        {['home', 'our-works', 'services', 'about'].map((item) => (
           <a 
             key={item}
             href={`#${item}`} 
             className="nav-link" 
             onClick={handleNavClick}
           >
-            {item.charAt(0).toUpperCase() + item.slice(1)}
+            {item === 'our-works' ? 'Our Works' : item.charAt(0).toUpperCase() + item.slice(1)}
           </a>
         ))}
         
