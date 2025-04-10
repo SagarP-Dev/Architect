@@ -12,7 +12,7 @@ export default function About() {
       >
         <h2 className="text-4xl md:text-5xl font-serif text-[#C4A962] mb-12">About Us</h2>
         <div className="grid grid-cols-1 gap-8">
-          {/* Add about content here */}
+          
           <p className="text-gray-400">About us content coming soon...</p>
         </div>
       </motion.div>

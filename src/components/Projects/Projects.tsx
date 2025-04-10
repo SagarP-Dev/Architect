@@ -1,5 +1,10 @@
 import { motion, Variants } from 'framer-motion';
 
+import bapiBhai from "../assets/bapi-bhai.jpg";
+import project2 from '../assets/r-behera-2.jpg';
+import project3 from '../assets/rajendra-behera.jpg';
+import project4 from '../assets/sankar-sen.jpg';
+
 export default function Projects() {
   const container: Variants = {
     hidden: { opacity: 0 },
@@ -16,6 +21,8 @@ export default function Projects() {
     hidden: { opacity: 0, y: 50 },
     show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
   };
+
+  const projectImages = [bapiBhai, project2, project3, project4];
 
   return (
     <section id="projects" className="min-h-screen bg-black py-24 px-6 lg:px-24">
@@ -37,15 +44,15 @@ export default function Projects() {
           variants={container}
           className="grid grid-cols-1 md:grid-cols-2 gap-8"
         >
-          {[1, 2, 3, 4].map((item) => (
+          {projectImages.map((image, index) => (
             <motion.div 
-              key={item}
+              key={index}
               variants={projectItem}
               className="group relative overflow-hidden aspect-[4/3]"
             >
               <img
-                src={`https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&h=600&fit=crop&q=80&${item}`}
-                alt={`Project ${item}`}
+                src={image}
+                alt={`Project ${index + 1}`}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">

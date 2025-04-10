@@ -12,7 +12,7 @@ export default function Blog() {
       >
         <h2 className="text-4xl md:text-5xl font-serif text-[#C4A962] mb-12">Blog</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Add blog content here */}
+          
           <p className="text-gray-400">Blog posts coming soon...</p>
         </div>
       </motion.div>

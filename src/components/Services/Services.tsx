@@ -4,8 +4,8 @@ import { fadeInUp, staggerContainer } from '../utils/animations';
 export default function Services() {
   const services = [
     'Residential Design',
-    'Commercial Architecture',
-    'Interior Planning'
+    'Commercial Design',
+    'Interior Design'
   ];
 
   return (

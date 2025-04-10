@@ -11,7 +11,7 @@ import Contact from './components/Contact/Contact';
 
 function App() {
   useEffect(() => {
-    // Smooth scroll behavior for the whole app
+    
     document.documentElement.style.scrollBehavior = 'smooth';
     return () => {
       document.documentElement.style.scrollBehavior = 'auto';

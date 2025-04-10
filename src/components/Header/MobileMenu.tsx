@@ -25,7 +25,7 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
     onClose();
   };
 
-  // Social media URLs (replace with your actual links)
+  
   const socialLinks = [
     {
       icon: <Instagram size={16} />,

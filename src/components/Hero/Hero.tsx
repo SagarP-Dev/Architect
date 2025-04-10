@@ -4,7 +4,7 @@ import ScrollIndicator from '../shared/ScrollIndicator';
 export default function Hero() {
   return (
     <section id="home" className="h-screen relative overflow-hidden">
-      {/* Background Image */}
+      
       <div className="absolute inset-0 z-0">
         <img 
           src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80" 

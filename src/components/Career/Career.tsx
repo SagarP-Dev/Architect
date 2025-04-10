@@ -12,7 +12,7 @@ export default function Career() {
       >
         <h2 className="text-4xl md:text-5xl font-serif text-[#C4A962] mb-12">Career</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Add career content here */}
+          
           <p className="text-gray-400">Career opportunities coming soon...</p>
         </div>
       </motion.div>

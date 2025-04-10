@@ -4,10 +4,10 @@ import { Menu, X } from 'lucide-react';
 import MobileMenu from './MobileMenu';
 import SocialLinks from './SocialLinks';
 
-// Logo Component
+
 const Logo = () => {
   const [logoError, setLogoError] = useState(false);
-  const logoPath = '/WhatsApp Image 2025-03-31 at 11.55.57_354e1db8.jpg'; // Ensure logo path is correct
+  const logoPath = '/WhatsApp Image 2025-03-31 at 11.55.57_354e1db8.jpg';
 
   return (
     <motion.div
@@ -43,7 +43,7 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // ✅ Added explicit typing for TypeScript
+  
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {  
     e.preventDefault();
     const href = e.currentTarget.getAttribute('href');
@@ -67,7 +67,7 @@ export default function Header() {
     <>
       <SocialLinks />
 
-      {/* Navbar */}
+      
       <nav
         className={`fixed w-full py-6 px-6 lg:px-12 flex justify-between items-center z-40 transition-all duration-300 ${
           isScrolled ? 'bg-black shadow-lg' : 'bg-transparent'
@@ -75,7 +75,7 @@ export default function Header() {
       >
         <Logo />
 
-        {/* Desktop Menu */}
+        
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -101,7 +101,7 @@ export default function Header() {
           </a>
         </motion.div>
 
-        {/* Mobile Menu Button */}
+       
         <button 
           className="md:hidden text-[#C4A962]"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -111,7 +111,7 @@ export default function Header() {
         </button>
       </nav>
 
-      {/* Mobile Menu */}
+     
       {isMenuOpen && <MobileMenu onClose={() => setIsMenuOpen(false)} />}
     </>
   );
