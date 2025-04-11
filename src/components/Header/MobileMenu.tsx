@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Instagram, Facebook, Linkedin, Youtube } from 'lucide-react';
+import { Instagram, Facebook, Linkedin } from 'lucide-react';
 
 type MobileMenuProps = {
   onClose: () => void;
@@ -28,24 +28,20 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
   const socialLinks = [
     {
       icon: <Instagram size={16} />,
-      url: 'https://www.instagram.com/_sagar_panigrahi__/',
+      url: 'https://www.instagram.com',
       label: 'Instagram'
     },
     {
       icon: <Facebook size={16} />,
-      url: 'https://www.facebook.com/sagar.panigrahi.182',
+      url: 'https://www.facebook.com',
       label: 'Facebook'
     },
     {
       icon: <Linkedin size={16} />,
-      url: 'https://www.linkedin.com/in/sagar-trushna-panigrahi-079b6727a/',
+      url: 'https://www.linkedin.com',
       label: 'LinkedIn'
-    },
-    {
-      icon: <Youtube size={16} />,
-      url: 'https://www.youtube.com/yourchannel',
-      label: 'YouTube'
     }
+    
   ];
 
   return (
