@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, Variants } from 'framer-motion';
 
 // Import all images
@@ -9,7 +9,6 @@ import project4 from '../assets/sankar-sen.jpg';
 import img5 from '../assets/sandipan.jpg'; 
 import img6 from '../assets/WhatsApp Image 2025-04-10 at 13.55.06_3cd8c7a4.jpg'; 
 import img7 from '../assets/WhatsApp Image 2025-04-10 at 13.59.16_10b62b7b.jpg'; 
-// import img8 from '../assets/WhatsApp Image 2025-04-10 at 14.02.32_b7ad153d.jpg'; 
 import img9 from '../assets/WhatsApp Image 2025-04-10 at 14.09.27_29fee8a4.jpg'; 
 import img10 from '../assets/WhatsApp Image 2025-04-10 at 14.09.49_c70a5449.jpg'; 
 import img11 from '../assets/WhatsApp Image 2025-04-10 at 14.10.39_72956366.jpg'; 
@@ -50,7 +49,7 @@ const projects: Record<Category, Project[]> = {
   Residential: [
     {
       image: bapiBhai,
-      name: 'Bapi Bhai Residence',
+      name: 'Soumendra Das',
       description: 'A beautiful residential property with modern amenities and elegant design.',
       completionDate: 'March 20XX',
       additionalImages: [img18, img16]
@@ -60,7 +59,6 @@ const projects: Record<Category, Project[]> = {
       name: 'R. Behera Residence',
       description: 'Contemporary home design with spacious interiors and lush landscaping.',
       completionDate: 'January 20XX',
-      
     },
     {
       image: project3,
@@ -78,12 +76,10 @@ const projects: Record<Category, Project[]> = {
     },
     {
       image: img5,
-      name: 'Sandipan Residence',
+      name: 'Sandipan Sarkar',
       description: 'Compact urban home with smart space utilization and minimalist design.',
       completionDate: 'May 20XX',
-      
     }
-   
   ],
   Commercial: [
     {
@@ -93,24 +89,14 @@ const projects: Record<Category, Project[]> = {
       completionDate: 'April 20XX',
       additionalImages: [img9, img10, img12, img11, img15]
     }
-    
-    
   ],
   Interior: [
-    
-    // {
-    //   image: img16,
-    //   name: 'Modern Kitchen',
-    //   description: 'Gourmet kitchen with high-end appliances and custom cabinetry.',
-    //   completionDate: 'January 20XX',
-    // },
     {
       image: img17,
       name: 'Bedroom',
       description: 'A cozy and tranquil bedroom retreat designed for comfort and relaxation. Featuring soft lighting, warm textures, and a harmonious color palette, the space creates a serene ambiance ideal for unwinding. Thoughtful furnishings, ample storage, and subtle design accents ensure both style and functionality, making it a perfect personal sanctuary.',
       completionDate: 'April 20XX',
     },
-    
     {
       image: img19,
       name: 'xyz',
@@ -209,6 +195,25 @@ export default function OurWorks() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const loadedImages = useRef<Set<string>>(new Set());
+
+  // Preload all images on component mount
+  useEffect(() => {
+    const allImages = Object.values(projects).flatMap(category => 
+      category.flatMap(project => 
+        [project.image, ...(project.additionalImages || [])]
+      )
+    );
+
+    allImages.forEach(src => {
+      if (!loadedImages.current.has(src)) {
+        const img = new Image();
+        img.src = src;
+        loadedImages.current.add(src);
+      }
+    });
+  }, []);
 
   const openModal = (project: Project) => {
     setSelectedProject(project);
@@ -232,6 +237,28 @@ export default function OurWorks() {
     if (!selectedProject?.additionalImages) return;
     const totalImages = (selectedProject.additionalImages?.length || 0) + 1;
     setCurrentImageIndex((prev) => (prev - 1 + totalImages) % totalImages);
+  };
+
+  const handleCategoryChange = (category: Category) => {
+    setIsLoading(true);
+    setSelected(category);
+    
+    // Small timeout to allow state update before checking images
+    setTimeout(() => {
+      // Check if all images for this category are loaded
+      const categoryImages = projects[category].flatMap(project => 
+        [project.image, ...(project.additionalImages || [])]
+      );
+      
+      const allLoaded = categoryImages.every(src => loadedImages.current.has(src));
+      
+      if (allLoaded) {
+        setIsLoading(false);
+      } else {
+        // If not all loaded, wait a brief moment
+        setTimeout(() => setIsLoading(false), 300);
+      }
+    }, 0);
   };
 
   useEffect(() => {
@@ -295,46 +322,57 @@ export default function OurWorks() {
           {tabs.map((tab) => (
             <button
               key={tab}
-              onClick={() => setSelected(tab)}
+              onClick={() => handleCategoryChange(tab)}
               className={`px-5 py-2 rounded-full border border-[#C4A962] text-sm font-semibold transition-all duration-300 ${
                 selected === tab ? "bg-[#C4A962] text-black" : "text-[#C4A962] hover:bg-[#C4A962]/20"
               }`}
+              disabled={isLoading}
             >
               {tab}
             </button>
           ))}
         </div>
 
+        {/* Loading state */}
+        {isLoading && (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#C4A962]"></div>
+          </div>
+        )}
+
         {/* Gallery */}
-        <motion.div 
-          variants={container}
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-        >
-          {projects[selected].map((project: Project, index: number) => (
-            <motion.div 
-              key={index}
-              variants={projectItem}
-              className="overflow-hidden aspect-[4/3] rounded-lg shadow-lg relative group cursor-pointer"
-              style={{ position: 'relative' }}
-              onClick={() => openModal(project)}
-            >
-              <img
-                loading="lazy"
-                src={project.image}
-                alt={`${selected} Work ${index + 1}`}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
-                <h3 className="text-white text-xl font-bold mb-2">{project.name}</h3>
-                <button
-                  className="bg-[#C4A962] text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-[#D4B972] transition-colors"
-                >
-                  View Details
-                </button>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+        {!isLoading && (
+          <motion.div 
+            variants={container}
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+          >
+            {projects[selected].map((project: Project, index: number) => (
+              <motion.div 
+                key={index}
+                variants={projectItem}
+                className="overflow-hidden aspect-[4/3] rounded-lg shadow-lg relative group cursor-pointer"
+                style={{ position: 'relative' }}
+                onClick={() => openModal(project)}
+              >
+                <img
+                  loading="eager"
+                  src={project.image}
+                  alt={`${selected} Work ${index + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  onLoad={() => loadedImages.current.add(project.image)}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
+                  <h3 className="text-white text-xl font-bold mb-2">{project.name}</h3>
+                  <button
+                    className="bg-[#C4A962] text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-[#D4B972] transition-colors"
+                  >
+                    View Details
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
       </motion.div>
 
       {/* Custom Modal */}
