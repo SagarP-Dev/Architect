@@ -34,6 +34,10 @@ import img30 from '../assets/bed 2 v2.jpg';
 import img31 from '../assets/cceac438531469.57650e131b4a4.jpg';
 import img32 from '../assets/dc179838531469.57650e1317652.jpg';
 import img33 from '../assets/puja.jpg';
+import img34 from '../assets/WhatsApp Image 2025-04-13 at 17.25.11_0694b909.jpg';
+import img35 from '../assets/WhatsApp Image 2025-04-13 at 17.25.09_856231bc.jpg';
+import img36 from '../assets/WhatsApp Image 2025-04-13 at 17.25.10_7337cbc1.jpg';
+import img37 from '../assets/WhatsApp Image 2025-04-13 at 17.25.10_73684546.jpg';
 
 type Category = 'Residential' | 'Commercial' | 'Interior';
 
@@ -88,6 +92,14 @@ const projects: Record<Category, Project[]> = {
       description: 'A sleek and professional corporate office space designed for the Toyota brand, blending functionality with modern aesthetics. This workspace features open-plan collaborative areas, private meeting rooms, and state-of-the-art facilities tailored for productivity and innovation. The design emphasizes clean lines, brand-themed elements, and a welcoming atmosphere for both staff and clients.',
       completionDate: 'April 20XX',
       additionalImages: [img9, img10, img12, img11, img15]
+    },
+
+    {
+      image: img34,
+      name: 'Toyota Showroom Baripada',
+      description: 'A sleek and professional corporate office space designed for the Toyota brand, blending functionality with modern aesthetics. This workspace features open-plan collaborative areas, private meeting rooms, and state-of-the-art facilities tailored for productivity and innovation. The design emphasizes clean lines, brand-themed elements, and a welcoming atmosphere for both staff and clients.',
+      completionDate: 'April 20XX',
+      additionalImages: [img35, img36, img37]
     }
   ],
   Interior: [
