@@ -1,7 +1,7 @@
 // components/Hero/Hero.tsx
 import { motion } from 'framer-motion';
 import ScrollIndicator from '../shared/ScrollIndicator';
-import ecoscapeLogo from '../assets/WhatsApp_Image_2025-03-31_at_11.55.57_354e1db8-removebg-preview.png';
+import ecoscapeLogo from '../assets/WhatsApp_Image_2025-03-31_at_11.55.57_354e1db8-removebg-preview (1).png';
 
 export default function Hero() {
   return (
