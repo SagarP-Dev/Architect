@@ -207,20 +207,24 @@ export default function OurWorks() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const loadedImages = useRef<Set<string>>(new Set());
-  const [imagesLoaded, setImagesLoaded] = useState<Record<Category, boolean>>({
+  const [categoryReady, setCategoryReady] = useState<Record<Category, boolean>>({
     Residential: false,
     Commercial: false,
     Interior: false
   });
 
-  // Preload all images on component mount and track loaded status
+  // Preload all images on component mount
   useEffect(() => {
     const loadImagesForCategory = (category: Category) => {
       const categoryImages = projects[category].flatMap(project => 
         [project.image, ...(project.additionalImages || [])]
       );
+
+      if (categoryImages.length === 0) {
+        setCategoryReady(prev => ({ ...prev, [category]: true }));
+        return;
+      }
 
       let loadedCount = 0;
       const totalImages = categoryImages.length;
@@ -233,27 +237,22 @@ export default function OurWorks() {
             loadedImages.current.add(src);
             loadedCount++;
             if (loadedCount === totalImages) {
-              setImagesLoaded(prev => ({ ...prev, [category]: true }));
+              setCategoryReady(prev => ({ ...prev, [category]: true }));
             }
           };
           img.onerror = () => {
-            loadedCount++; // Count even if error to prevent infinite loading
+            loadedCount++;
             if (loadedCount === totalImages) {
-              setImagesLoaded(prev => ({ ...prev, [category]: true }));
+              setCategoryReady(prev => ({ ...prev, [category]: true }));
             }
           };
         } else {
           loadedCount++;
           if (loadedCount === totalImages) {
-            setImagesLoaded(prev => ({ ...prev, [category]: true }));
+            setCategoryReady(prev => ({ ...prev, [category]: true }));
           }
         }
       });
-
-      // If no images to load, mark as loaded immediately
-      if (totalImages === 0) {
-        setImagesLoaded(prev => ({ ...prev, [category]: true }));
-      }
     };
 
     // Load images for all categories
@@ -286,38 +285,30 @@ export default function OurWorks() {
     setCurrentImageIndex((prev) => (prev - 1 + totalImages) % totalImages);
   };
 
-  const handleCategoryChange = async (category: Category) => {
-    if (category === selected) return;
+  const handleCategoryChange = (category: Category) => {
+    if (category === selected || isLoading) return;
     
-    setIsTransitioning(true);
     setIsLoading(true);
-    
-    // Wait a brief moment to allow the transition animation to start
-    await new Promise(resolve => setTimeout(resolve, 300));
-    
     setSelected(category);
     
-    // If images are already loaded, show content immediately
-    if (imagesLoaded[category]) {
+    // If category is already ready, show it immediately
+    if (categoryReady[category]) {
       setIsLoading(false);
-      setIsTransitioning(false);
       return;
     }
-    
-    // Otherwise, wait for images to load
+
+    // Otherwise wait for images to load
     const checkLoaded = setInterval(() => {
-      if (imagesLoaded[category]) {
+      if (categoryReady[category]) {
         clearInterval(checkLoaded);
         setIsLoading(false);
-        setIsTransitioning(false);
       }
     }, 100);
-    
-    // Timeout after 5 seconds in case some images fail to load
+
+    // Timeout after 5 seconds in case of errors
     setTimeout(() => {
       clearInterval(checkLoaded);
       setIsLoading(false);
-      setIsTransitioning(false);
     }, 5000);
   };
 
@@ -385,8 +376,8 @@ export default function OurWorks() {
               onClick={() => handleCategoryChange(tab)}
               className={`px-5 py-2 rounded-full border border-[#C4A962] text-sm font-semibold transition-all duration-300 ${
                 selected === tab ? "bg-[#C4A962] text-black" : "text-[#C4A962] hover:bg-[#C4A962]/20"
-              } ${isTransitioning ? 'opacity-70 cursor-not-allowed' : ''}`}
-              disabled={isTransitioning}
+              } ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+              disabled={isLoading}
             >
               {tab}
             </button>
@@ -396,7 +387,7 @@ export default function OurWorks() {
         {/* Gallery with loading state */}
         <div className="relative min-h-[500px]">
           <AnimatePresence mode="wait">
-            {(isLoading || isTransitioning) ? (
+            {isLoading ? (
               <motion.div
                 key="loading"
                 initial={{ opacity: 0 }}
@@ -432,11 +423,9 @@ export default function OurWorks() {
                       key={`${selected}-${index}`}
                       variants={projectItem}
                       className="overflow-hidden aspect-[4/3] rounded-lg shadow-lg relative group cursor-pointer"
-                      style={{ position: 'relative' }}
                       onClick={() => openModal(project)}
                     >
                       <img
-                        loading="eager"
                         src={project.image}
                         alt={`${selected} Work ${index + 1}`}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
