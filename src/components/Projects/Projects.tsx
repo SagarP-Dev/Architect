@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, Variants } from 'framer-motion';
+import { motion, Variants, AnimatePresence } from 'framer-motion';
 
 // Import all images
 import bapiBhai from "../assets/bapi-bhai.jpg"; 
@@ -93,7 +93,6 @@ const projects: Record<Category, Project[]> = {
       completionDate: 'April 20XX',
       additionalImages: [img9, img10, img12, img11, img15]
     },
-
     {
       image: img34,
       name: 'Toyota Showroom Baripada',
@@ -111,14 +110,14 @@ const projects: Record<Category, Project[]> = {
     },
     {
       image: img19,
-      name: 'xyz',
-      description: 'xyz.',
+      name: 'Durga Puja Pandel',
+      description: 'Beautifully crafted Durga Puja pandal with intricate designs and decorations.',
       completionDate: 'June 20XX',
     },
     {
       image: img20,
-      name: 'xyz.',
-      description: 'xyz.',
+      name: 'Living Room Design',
+      description: 'Modern living room with elegant furniture and lighting fixtures.',
       completionDate: 'July 20XX',
     },
     {
@@ -147,8 +146,8 @@ const projects: Record<Category, Project[]> = {
     },
     {
       image: img25,
-      name: 'xyz',
-      description: 'xyz.',
+      name: 'Living Room',
+      description: 'Contemporary living space with modern furniture and decor.',
       completionDate: 'December 20XX',
     },
     {
@@ -189,14 +188,14 @@ const projects: Record<Category, Project[]> = {
     },
     {
       image: img32,
-      name: 'xyz',
-      description: 'xyz.',
+      name: 'Living Area',
+      description: 'Spacious living area with modern design elements.',
       completionDate: 'July 20XX',
     },
     {
       image: img33,
-      name: 'xyz',
-      description: 'xyz.',
+      name: 'Puja Room',
+      description: 'Sacred space designed for worship and meditation.',
       completionDate: 'August 20XX',
     }
   ],
@@ -208,22 +207,58 @@ export default function OurWorks() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const loadedImages = useRef<Set<string>>(new Set());
+  const [imagesLoaded, setImagesLoaded] = useState<Record<Category, boolean>>({
+    Residential: false,
+    Commercial: false,
+    Interior: false
+  });
 
-  // Preload all images on component mount
+  // Preload all images on component mount and track loaded status
   useEffect(() => {
-    const allImages = Object.values(projects).flatMap(category => 
-      category.flatMap(project => 
+    const loadImagesForCategory = (category: Category) => {
+      const categoryImages = projects[category].flatMap(project => 
         [project.image, ...(project.additionalImages || [])]
-      )
-    );
+      );
 
-    allImages.forEach(src => {
-      if (!loadedImages.current.has(src)) {
-        const img = new Image();
-        img.src = src;
-        loadedImages.current.add(src);
+      let loadedCount = 0;
+      const totalImages = categoryImages.length;
+
+      categoryImages.forEach(src => {
+        if (!loadedImages.current.has(src)) {
+          const img = new Image();
+          img.src = src;
+          img.onload = () => {
+            loadedImages.current.add(src);
+            loadedCount++;
+            if (loadedCount === totalImages) {
+              setImagesLoaded(prev => ({ ...prev, [category]: true }));
+            }
+          };
+          img.onerror = () => {
+            loadedCount++; // Count even if error to prevent infinite loading
+            if (loadedCount === totalImages) {
+              setImagesLoaded(prev => ({ ...prev, [category]: true }));
+            }
+          };
+        } else {
+          loadedCount++;
+          if (loadedCount === totalImages) {
+            setImagesLoaded(prev => ({ ...prev, [category]: true }));
+          }
+        }
+      });
+
+      // If no images to load, mark as loaded immediately
+      if (totalImages === 0) {
+        setImagesLoaded(prev => ({ ...prev, [category]: true }));
       }
+    };
+
+    // Load images for all categories
+    (Object.keys(projects) as Category[]).forEach(category => {
+      loadImagesForCategory(category);
     });
   }, []);
 
@@ -251,26 +286,39 @@ export default function OurWorks() {
     setCurrentImageIndex((prev) => (prev - 1 + totalImages) % totalImages);
   };
 
-  const handleCategoryChange = (category: Category) => {
+  const handleCategoryChange = async (category: Category) => {
+    if (category === selected) return;
+    
+    setIsTransitioning(true);
     setIsLoading(true);
+    
+    // Wait a brief moment to allow the transition animation to start
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
     setSelected(category);
     
-    // Small timeout to allow state update before checking images
-    setTimeout(() => {
-      // Check if all images for this category are loaded
-      const categoryImages = projects[category].flatMap(project => 
-        [project.image, ...(project.additionalImages || [])]
-      );
-      
-      const allLoaded = categoryImages.every(src => loadedImages.current.has(src));
-      
-      if (allLoaded) {
+    // If images are already loaded, show content immediately
+    if (imagesLoaded[category]) {
+      setIsLoading(false);
+      setIsTransitioning(false);
+      return;
+    }
+    
+    // Otherwise, wait for images to load
+    const checkLoaded = setInterval(() => {
+      if (imagesLoaded[category]) {
+        clearInterval(checkLoaded);
         setIsLoading(false);
-      } else {
-        // If not all loaded, wait a brief moment
-        setTimeout(() => setIsLoading(false), 300);
+        setIsTransitioning(false);
       }
-    }, 0);
+    }, 100);
+    
+    // Timeout after 5 seconds in case some images fail to load
+    setTimeout(() => {
+      clearInterval(checkLoaded);
+      setIsLoading(false);
+      setIsTransitioning(false);
+    }, 5000);
   };
 
   useEffect(() => {
@@ -337,54 +385,77 @@ export default function OurWorks() {
               onClick={() => handleCategoryChange(tab)}
               className={`px-5 py-2 rounded-full border border-[#C4A962] text-sm font-semibold transition-all duration-300 ${
                 selected === tab ? "bg-[#C4A962] text-black" : "text-[#C4A962] hover:bg-[#C4A962]/20"
-              }`}
-              disabled={isLoading}
+              } ${isTransitioning ? 'opacity-70 cursor-not-allowed' : ''}`}
+              disabled={isTransitioning}
             >
               {tab}
             </button>
           ))}
         </div>
 
-        {/* Loading state */}
-        {isLoading && (
-          <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#C4A962]"></div>
-          </div>
-        )}
-
-        {/* Gallery */}
-        {!isLoading && (
-          <motion.div 
-            variants={container}
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-          >
-            {projects[selected].map((project: Project, index: number) => (
-              <motion.div 
-                key={index}
-                variants={projectItem}
-                className="overflow-hidden aspect-[4/3] rounded-lg shadow-lg relative group cursor-pointer"
-                style={{ position: 'relative' }}
-                onClick={() => openModal(project)}
+        {/* Gallery with loading state */}
+        <div className="relative min-h-[500px]">
+          <AnimatePresence mode="wait">
+            {(isLoading || isTransitioning) ? (
+              <motion.div
+                key="loading"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0 flex justify-center items-center"
               >
-                <img
-                  loading="eager"
-                  src={project.image}
-                  alt={`${selected} Work ${index + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  onLoad={() => loadedImages.current.add(project.image)}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
-                  <h3 className="text-white text-xl font-bold mb-2">{project.name}</h3>
-                  <button
-                    className="bg-[#C4A962] text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-[#D4B972] transition-colors"
-                  >
-                    View Details
-                  </button>
+                <div className="flex flex-col items-center">
+                  <div className="relative">
+                    <div className="w-16 h-16 border-4 border-[#C4A962] border-t-transparent rounded-full animate-spin"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-8 h-8 bg-[#C4A962] rounded-full animate-pulse"></div>
+                    </div>
+                  </div>
+                  <p className="mt-4 text-[#C4A962]">Loading projects...</p>
                 </div>
               </motion.div>
-            ))}
-          </motion.div>
-        )}
+            ) : (
+              <motion.div
+                key="content"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.div 
+                  variants={container}
+                  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+                >
+                  {projects[selected].map((project: Project, index: number) => (
+                    <motion.div 
+                      key={`${selected}-${index}`}
+                      variants={projectItem}
+                      className="overflow-hidden aspect-[4/3] rounded-lg shadow-lg relative group cursor-pointer"
+                      style={{ position: 'relative' }}
+                      onClick={() => openModal(project)}
+                    >
+                      <img
+                        loading="eager"
+                        src={project.image}
+                        alt={`${selected} Work ${index + 1}`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
+                        <h3 className="text-white text-xl font-bold mb-2">{project.name}</h3>
+                        <button
+                          className="bg-[#C4A962] text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-[#D4B972] transition-colors"
+                        >
+                          View Details
+                        </button>
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </motion.div>
 
       {/* Custom Modal */}
