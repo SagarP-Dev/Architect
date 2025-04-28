@@ -20,7 +20,7 @@ export default function Hero() {
               filter: "blur(0px)",
               transition: { duration: 1.8, ease: [0.2, 0.8, 0.4, 1] }
             }}
-            className="w-full max-w-xs md:max-w-md flex-shrink-0"
+            className="w-full max-w-[150px] md:max-w-[200px] flex-shrink-0" // Changed only these values
           >
             <img 
               src={ecoscapeLogo} 
