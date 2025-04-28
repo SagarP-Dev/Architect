@@ -90,7 +90,7 @@ const projects: Record<Category, Project[]> = {
     },
     {
       image: bapiBhai,
-      name: 'Shrinivas-Appartment',
+      name: 'Shree Nivas-Appartment',
       description: 'A beautiful residential property with modern amenities and elegant design.',
       completionDate: 'March 20XX',
       additionalImages: [img18, img16]
@@ -100,56 +100,56 @@ const projects: Record<Category, Project[]> = {
     // Bedroom projects
     {
       image: img17,
-      name: 'Bedroom Design 1',
+      name: '',
       description: 'A cozy and tranquil bedroom retreat designed for comfort and relaxation. Featuring soft lighting, warm textures, and a harmonious color palette, the space creates a serene ambiance ideal for unwinding. Thoughtful furnishings, ample storage, and subtle design accents ensure both style and functionality, making it a perfect personal sanctuary.',
       completionDate: 'April 20XX',
       subcategory: 'Bedroom'
     },
     {
       image: img21,
-      name: 'Bedroom Design 2',
+      name: '',
       description: 'A cozy and tranquil bedroom retreat designed for comfort and relaxation. Featuring soft lighting, warm textures, and a harmonious color palette, the space creates a serene ambiance ideal for unwinding. Thoughtful furnishings, ample storage, and subtle design accents ensure both style and functionality, making it a perfect personal sanctuary.',
       completionDate: 'August 20XX',
       subcategory: 'Bedroom'
     },
     {
       image: img22,
-      name: 'Bedroom Design 3',
+      name: '',
       description: 'Luxurious sleeping quarters with premium bedding and decor.',
       completionDate: 'September 20XX',
       subcategory: 'Bedroom'
     },
     {
       image: img26,
-      name: 'Bedroom Design 4',
+      name: '',
       description: 'First design option for primary bedroom with neutral palette.',
       completionDate: 'January 20XX',
       subcategory: 'Bedroom'
     },
     {
       image: img27,
-      name: 'Bedroom Design 5',
+      name: '',
       description: 'Second design option with warmer tones and textured finishes.',
       completionDate: 'February 20XX',
       subcategory: 'Bedroom'
     },
     {
       image: img28,
-      name: 'Bedroom Design 6',
+      name: '',
       description: 'Third design option featuring bold colors and modern art.',
       completionDate: 'March 20XX',
       subcategory: 'Bedroom'
     },
     {
       image: img29,
-      name: 'Bedroom Design 7',
+      name: '',
       description: 'First option for accommodations with minimalist design.',
       completionDate: 'April 20XX',
       subcategory: 'Bedroom'
     },
     {
       image: img30,
-      name: 'Bedroom Design 8',
+      name: '',
       description: 'Second option with more traditional furnishings and decor.',
       completionDate: 'May 20XX',
       subcategory: 'Bedroom'
@@ -158,14 +158,14 @@ const projects: Record<Category, Project[]> = {
     // Dining projects
     {
       image: img23,
-      name: 'Dining Design 1',
+      name: '',
       description: 'Elegant dining space for entertaining guests and family gatherings.',
       completionDate: 'October 20XX',
       subcategory: 'Dining'
     },
     {
       image: img24,
-      name: 'Dinning Design 2',
+      name: '',
       description: 'Casual dining area with comfortable seating and natural light.',
       completionDate: 'November 20XX',
       subcategory: 'Dining'
@@ -174,7 +174,7 @@ const projects: Record<Category, Project[]> = {
     // Living Room projects
     {
       image: img20,
-      name: 'Living Room Design 1',
+      name: '',
       description: 'Modern living room with elegant furniture and lighting fixtures.',
       completionDate: 'July 20XX',
       subcategory: 'Living Room'
@@ -182,7 +182,7 @@ const projects: Record<Category, Project[]> = {
 
     {
       image: img31,
-      name: 'Living Room Design 2',
+      name: '',
       description: 'Home theater with premium audio-visual equipment and seating.',
       completionDate: 'June 20XX',
       subcategory: 'Living Room'
@@ -190,7 +190,7 @@ const projects: Record<Category, Project[]> = {
     
     {
       image: img32,
-      name: 'Living Room Design 3',
+      name: '',
       description: 'Spacious living area with modern design elements.',
       completionDate: 'July 20XX',
       subcategory: 'Living Room'
@@ -200,14 +200,14 @@ const projects: Record<Category, Project[]> = {
     
     {
       image: img25,
-      name: 'Office Design 1',
+      name: '',
       description: 'Contemporary living space with modern furniture and decor.',
       completionDate: 'December 20XX',
       subcategory: 'Office'
     },
     {
       image: img19,
-      name: 'Office Design 2',
+      name: '',
       description: 'Beautifully crafted Durga Puja pandal with intricate designs and decorations.',
       completionDate: 'June 20XX',
       subcategory: 'Office'
@@ -217,7 +217,7 @@ const projects: Record<Category, Project[]> = {
     
     {
       image: img33,
-      name: 'Puja Room',
+      name: '',
       description: 'Sacred space designed for worship and meditation.',
       completionDate: 'August 20XX',
       subcategory: 'Puja Room'
