@@ -13,7 +13,7 @@ const Logo = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="flex items-center justify-center w-16 h-16 rounded-full bg-[#C4A962]"
+      className="flex items-center justify-center w-20 h-20 rounded-full bg-[#C4A962]"
     >
       {!logoError ? (
         <img 
