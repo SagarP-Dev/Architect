@@ -7,6 +7,7 @@ import Services from './components/Services/Services';
 import About from './components/About/About';
 import Contact from './components/Contact/Contact';
 import Background from './components/Background/Background';
+import RunningText from './components/RunningText';
 
 function App() {
   useEffect(() => {
@@ -18,6 +19,7 @@ function App() {
 
   return (
     <div className="text-white">
+      
       <Header />
       <Background>
         <Hero />
@@ -26,6 +28,7 @@ function App() {
         <About />
         <Contact />
       </Background>
+      <RunningText />
     </div>
   );
 }

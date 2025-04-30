@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, Variants, AnimatePresence } from 'framer-motion';
 
 // Import all images
@@ -38,7 +38,7 @@ import img35 from '../assets/WhatsApp Image 2025-04-13 at 17.25.09_856231bc.jpg'
 import img36 from '../assets/WhatsApp Image 2025-04-13 at 17.25.10_7337cbc1.jpg';
 import img37 from '../assets/WhatsApp Image 2025-04-13 at 17.25.10_73684546.jpg';
 
-type Category = 'Residential' | 'Commercial' | 'Interior';
+type Category = 'All' | 'Residential' | 'Commercial' | 'Interior';
 type InteriorSubcategory = 'Bedroom' | 'Dining' | 'Living Room' | 'Office' | 'Puja Room';
 
 interface Project {
@@ -48,29 +48,33 @@ interface Project {
   completionDate: string;
   additionalImages?: string[];
   subcategory?: InteriorSubcategory;
+  category: 'Residential' | 'Commercial' | 'Interior';
 }
 
-const projects: Record<Category, Project[]> = {
+const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
   Residential: [
     {
       image: project3,
       name: 'Rajendra Behera',
       description: 'Luxury villa with premium finishes and custom architectural details.',
       completionDate: 'November 20XX',
-      additionalImages: [img13, img14]
+      additionalImages: [img13, img14],
+      category: 'Residential'
     },
     {
       image: project4,
       name: 'Sankar Sen',
       description: 'Elegant residence with traditional influences and modern comforts.',
       completionDate: 'August 20XX',
-      additionalImages: [img6]
+      category: 'Residential'
     },
     {
       image: img5,
       name: 'Sandipan Sarkar',
       description: 'Compact urban home with smart space utilization and minimalist design.',
       completionDate: 'May 20XX',
+      additionalImages: [img6],
+      category: 'Residential'
     }
   ],
   Commercial: [
@@ -79,21 +83,24 @@ const projects: Record<Category, Project[]> = {
       name: 'Toyota Showroom-Balasore',
       description: 'A sleek and professional corporate office space designed for the Toyota brand, blending functionality with modern aesthetics. This workspace features open-plan collaborative areas, private meeting rooms, and state-of-the-art facilities tailored for productivity and innovation. The design emphasizes clean lines, brand-themed elements, and a welcoming atmosphere for both staff and clients.',
       completionDate: 'April 20XX',
-      additionalImages: [img9, img10, img12, img11, img15]
+      additionalImages: [img9, img10, img12, img11, img15],
+      category: 'Commercial'
     },
     {
       image: img34,
       name: 'Toyota Showroom-Baripada',
       description: 'A sleek and professional corporate office space designed for the Toyota brand, blending functionality with modern aesthetics. This workspace features open-plan collaborative areas, private meeting rooms, and state-of-the-art facilities tailored for productivity and innovation. The design emphasizes clean lines, brand-themed elements, and a welcoming atmosphere for both staff and clients.',
       completionDate: 'April 20XX',
-      additionalImages: [img35, img36, img37]
+      additionalImages: [img35, img36, img37],
+      category: 'Commercial'
     },
     {
       image: bapiBhai,
       name: 'Shree Nivas-Appartment',
       description: 'A beautiful residential property with modern amenities and elegant design.',
       completionDate: 'March 20XX',
-      additionalImages: [img18, img16]
+      additionalImages: [img18, img16],
+      category: 'Commercial'
     },
   ],
   Interior: [
@@ -103,56 +110,64 @@ const projects: Record<Category, Project[]> = {
       name: '',
       description: 'A cozy and tranquil bedroom retreat designed for comfort and relaxation. Featuring soft lighting, warm textures, and a harmonious color palette, the space creates a serene ambiance ideal for unwinding. Thoughtful furnishings, ample storage, and subtle design accents ensure both style and functionality, making it a perfect personal sanctuary.',
       completionDate: 'April 20XX',
-      subcategory: 'Bedroom'
+      subcategory: 'Bedroom',
+      category: 'Interior'
     },
     {
       image: img21,
       name: '',
       description: 'A cozy and tranquil bedroom retreat designed for comfort and relaxation. Featuring soft lighting, warm textures, and a harmonious color palette, the space creates a serene ambiance ideal for unwinding. Thoughtful furnishings, ample storage, and subtle design accents ensure both style and functionality, making it a perfect personal sanctuary.',
       completionDate: 'August 20XX',
-      subcategory: 'Bedroom'
+      subcategory: 'Bedroom',
+      category: 'Interior'
     },
     {
       image: img22,
       name: '',
       description: 'Luxurious sleeping quarters with premium bedding and decor.',
       completionDate: 'September 20XX',
-      subcategory: 'Bedroom'
+      subcategory: 'Bedroom',
+      category: 'Interior'
     },
     {
       image: img26,
       name: '',
       description: 'First design option for primary bedroom with neutral palette.',
       completionDate: 'January 20XX',
-      subcategory: 'Bedroom'
+      subcategory: 'Bedroom',
+      category: 'Interior'
     },
     {
       image: img27,
       name: '',
       description: 'Second design option with warmer tones and textured finishes.',
       completionDate: 'February 20XX',
-      subcategory: 'Bedroom'
+      subcategory: 'Bedroom',
+      category: 'Interior'
     },
     {
       image: img28,
       name: '',
       description: 'Third design option featuring bold colors and modern art.',
       completionDate: 'March 20XX',
-      subcategory: 'Bedroom'
+      subcategory: 'Bedroom',
+      category: 'Interior'
     },
     {
       image: img29,
       name: '',
       description: 'First option for accommodations with minimalist design.',
       completionDate: 'April 20XX',
-      subcategory: 'Bedroom'
+      subcategory: 'Bedroom',
+      category: 'Interior'
     },
     {
       image: img30,
       name: '',
       description: 'Second option with more traditional furnishings and decor.',
       completionDate: 'May 20XX',
-      subcategory: 'Bedroom'
+      subcategory: 'Bedroom',
+      category: 'Interior'
     },
     
     // Dining projects
@@ -161,14 +176,16 @@ const projects: Record<Category, Project[]> = {
       name: '',
       description: 'Elegant dining space for entertaining guests and family gatherings.',
       completionDate: 'October 20XX',
-      subcategory: 'Dining'
+      subcategory: 'Dining',
+      category: 'Interior'
     },
     {
       image: img24,
       name: '',
       description: 'Casual dining area with comfortable seating and natural light.',
       completionDate: 'November 20XX',
-      subcategory: 'Dining'
+      subcategory: 'Dining',
+      category: 'Interior'
     },
     
     // Living Room projects
@@ -177,7 +194,8 @@ const projects: Record<Category, Project[]> = {
       name: '',
       description: 'Modern living room with elegant furniture and lighting fixtures.',
       completionDate: 'July 20XX',
-      subcategory: 'Living Room'
+      subcategory: 'Living Room',
+      category: 'Interior'
     },
 
     {
@@ -185,7 +203,8 @@ const projects: Record<Category, Project[]> = {
       name: '',
       description: 'Home theater with premium audio-visual equipment and seating.',
       completionDate: 'June 20XX',
-      subcategory: 'Living Room'
+      subcategory: 'Living Room',
+      category: 'Interior'
     },
     
     {
@@ -193,7 +212,8 @@ const projects: Record<Category, Project[]> = {
       name: '',
       description: 'Spacious living area with modern design elements.',
       completionDate: 'July 20XX',
-      subcategory: 'Living Room'
+      subcategory: 'Living Room',
+      category: 'Interior'
     },
     
     // Office projects
@@ -203,14 +223,16 @@ const projects: Record<Category, Project[]> = {
       name: '',
       description: 'Contemporary living space with modern furniture and decor.',
       completionDate: 'December 20XX',
-      subcategory: 'Office'
+      subcategory: 'Office',
+      category: 'Interior'
     },
     {
       image: img19,
       name: '',
       description: 'Beautifully crafted Durga Puja pandal with intricate designs and decorations.',
       completionDate: 'June 20XX',
-      subcategory: 'Office'
+      subcategory: 'Office',
+      category: 'Interior'
     },
     
     // Puja Room projects
@@ -220,15 +242,23 @@ const projects: Record<Category, Project[]> = {
       name: '',
       description: 'Sacred space designed for worship and meditation.',
       completionDate: 'August 20XX',
-      subcategory: 'Puja Room'
+      subcategory: 'Puja Room',
+      category: 'Interior'
     }
   ],
 };
 
+// Combine all projects for the "All" category
+const allProjects = [
+  ...projectsData.Residential,
+  ...projectsData.Commercial,
+  ...projectsData.Interior
+];
+
 const WatermarkOverlay = () => (
   <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-    <div className="text-white/20 text-4xl font-bold transform -rotate-45 select-none">
-      © {new Date().getFullYear()} Ecoscape
+    <div className="text-white/10 text-xl font-bold transform -rotate-15 select-none">
+      © Ecoscape
     </div>
   </div>
 );
@@ -274,16 +304,15 @@ const ProtectedImage = ({ src, alt }: { src: string; alt: string }) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
       
-      ctx.font = 'bold 48px Arial';
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+      // Single, light watermark
+      ctx.font = 'bold 24px Arial';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.save();
       ctx.translate(canvas.width/2, canvas.height/2);
-      ctx.rotate(-Math.PI/4);
+      ctx.rotate(-Math.PI/8); // Less rotation
       ctx.fillText('© Ecoscape', 0, 0);
-      ctx.fillText('© Ecoscape', 200, 200);
-      ctx.fillText('© Ecoscape', -200, -200);
       ctx.restore();
     };
 
@@ -306,7 +335,7 @@ const ProtectedImage = ({ src, alt }: { src: string; alt: string }) => {
 };
 
 export default function Projects() {
-  const [selected, setSelected] = useState<Category>('Residential');
+  const [selected, setSelected] = useState<Category>('All');
   const [selectedInteriorSubcategory, setSelectedInteriorSubcategory] = useState<InteriorSubcategory | 'All'>('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -314,6 +343,7 @@ export default function Projects() {
   const [isLoading, setIsLoading] = useState(false);
   const loadedImages = useRef<Set<string>>(new Set());
   const [categoryReady, setCategoryReady] = useState<Record<Category, boolean>>({
+    All: false,
     Residential: false,
     Commercial: false,
     Interior: false
@@ -321,9 +351,17 @@ export default function Projects() {
 
   useEffect(() => {
     const loadImagesForCategory = (category: Category) => {
-      const categoryImages = projects[category].flatMap(project => 
-        [project.image, ...(project.additionalImages || [])]
-      );
+      let categoryImages: string[] = [];
+      
+      if (category === 'All') {
+        categoryImages = allProjects.flatMap(project => 
+          [project.image, ...(project.additionalImages || [])]
+        );
+      } else {
+        categoryImages = projectsData[category].flatMap(project => 
+          [project.image, ...(project.additionalImages || [])]
+        );
+      }
 
       if (categoryImages.length === 0) {
         setCategoryReady(prev => ({ ...prev, [category]: true }));
@@ -359,36 +397,36 @@ export default function Projects() {
       });
     };
 
-    (Object.keys(projects) as Category[]).forEach(category => {
+    (['All', 'Residential', 'Commercial', 'Interior'] as Category[]).forEach(category => {
       loadImagesForCategory(category);
     });
   }, []);
 
-  const openModal = (project: Project) => {
+  const openModal = useCallback((project: Project) => {
     setSelectedProject(project);
     setIsModalOpen(true);
     setCurrentImageIndex(0);
     document.body.style.overflow = 'hidden';
-  };
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setIsModalOpen(false);
     document.body.style.overflow = 'auto';
-  };
+  }, []);
 
-  const nextImage = () => {
+  const nextImage = useCallback(() => {
     if (!selectedProject?.additionalImages) return;
     const totalImages = (selectedProject.additionalImages?.length || 0) + 1;
     setCurrentImageIndex((prev) => (prev + 1) % totalImages);
-  };
+  }, [selectedProject]);
 
-  const prevImage = () => {
+  const prevImage = useCallback(() => {
     if (!selectedProject?.additionalImages) return;
     const totalImages = (selectedProject.additionalImages?.length || 0) + 1;
     setCurrentImageIndex((prev) => (prev - 1 + totalImages) % totalImages);
-  };
+  }, [selectedProject]);
 
-  const handleCategoryChange = (category: Category) => {
+  const handleCategoryChange = useCallback((category: Category) => {
     if (category === selected || isLoading) return;
     
     setIsLoading(true);
@@ -410,18 +448,23 @@ export default function Projects() {
       clearInterval(checkLoaded);
       setIsLoading(false);
     }, 5000);
-  };
+  }, [selected, isLoading, categoryReady]);
 
-  const handleInteriorSubcategoryChange = (subcategory: InteriorSubcategory | 'All') => {
+  const handleInteriorSubcategoryChange = useCallback((subcategory: InteriorSubcategory | 'All') => {
     setSelectedInteriorSubcategory(subcategory);
-  };
+  }, []);
 
-  const getFilteredProjects = () => {
-    if (selected !== 'Interior' || selectedInteriorSubcategory === 'All') {
-      return projects[selected];
+  const getFilteredProjects = useCallback(() => {
+    if (selected === 'All') {
+      return allProjects;
     }
-    return projects[selected].filter(project => project.subcategory === selectedInteriorSubcategory);
-  };
+    
+    if (selected !== 'Interior' || selectedInteriorSubcategory === 'All') {
+      return projectsData[selected];
+    }
+    
+    return projectsData[selected].filter(project => project.subcategory === selectedInteriorSubcategory);
+  }, [selected, selectedInteriorSubcategory]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -444,7 +487,7 @@ export default function Projects() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isModalOpen, selectedProject]);
+  }, [isModalOpen, closeModal, nextImage, prevImage]);
 
   const container: Variants = {
     hidden: { opacity: 0 },
@@ -462,7 +505,7 @@ export default function Projects() {
     show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
   };
 
-  const tabs: Category[] = ['Residential', 'Commercial', 'Interior'];
+  const tabs: Category[] = ['All', 'Residential', 'Commercial', 'Interior'];
   const interiorSubcategories: (InteriorSubcategory | 'All')[] = ['All', 'Bedroom', 'Dining', 'Living Room', 'Office', 'Puja Room'];
 
   return (
@@ -480,7 +523,7 @@ export default function Projects() {
           Our Works
         </motion.h2>
 
-        <div className="flex justify-center mb-10 gap-4">
+        <div className="flex justify-center mb-10 gap-4 flex-wrap">
           {tabs.map((tab) => (
             <button
               key={tab}
@@ -546,31 +589,48 @@ export default function Projects() {
                 >
                   {getFilteredProjects().map((project: Project, index: number) => (
                     <motion.div 
-                      key={`${selected}-${index}`}
-                      variants={projectItem}
-                      className="overflow-hidden rounded-lg shadow-lg relative group cursor-pointer h-96"
-                      onClick={() => openModal(project)}
-                      onContextMenu={(e) => e.preventDefault()}
-                    >
-                      <div className="relative w-full h-full">
-                        <div className="absolute inset-0 flex items-center justify-center bg-black overflow-hidden">
-                          <ProtectedImage src={project.image} alt={`${selected} Work ${index + 1}`} />
-                        </div>
-                        <WatermarkOverlay />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end">
-                          <div className="p-4 pb-6">
-                            <h3 className="text-white text-xl font-bold mb-3 line-clamp-2 min-h-[3rem] flex items-center">
-                              {project.name}
-                            </h3>
-                            <button
-                              className="bg-[#C4A962] text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-[#D4B972] transition-colors w-full"
-                            >
-                              View Details
-                            </button>
+                    key={`${project.category}-${index}`}
+                    variants={projectItem}
+                    className="overflow-hidden rounded-lg shadow-lg relative group cursor-pointer h-96"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openModal(project);
+                    }}
+                    onContextMenu={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                  >
+                    <div className="relative w-full h-full">
+                      <div className="absolute inset-0 flex items-center justify-center bg-black overflow-hidden">
+                        <ProtectedImage src={project.image} alt={`${project.category} Work ${index + 1}`} />
+                      </div>
+                      <WatermarkOverlay />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end">
+                        <div className="p-4 pb-6">
+                          <h3 className="text-white text-xl font-bold mb-3 line-clamp-2 min-h-[3rem] flex items-center">
+                            {project.category === 'Interior' && !project.name 
+                              ? '' 
+                              : project.name || `${project.category} Project`}
+                          </h3>
+                          <div className="flex justify-between items-center mb-2">
+                            <span className="text-[#C4A962] text-sm capitalize">
+                              {project.category}
+                              {project.subcategory ? ` • ${project.subcategory}` : ''}
+                            </span>
+                            <span className="text-white/70 text-xs">
+                              {project.completionDate}
+                            </span>
                           </div>
+                          <button
+                            className="bg-[#C4A962] text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-[#D4B972] transition-colors w-full"
+                          >
+                            View Details
+                          </button>
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
+                  </motion.div>
                   ))}
                 </motion.div>
               </motion.div>
@@ -580,133 +640,152 @@ export default function Projects() {
       </motion.div>
 
       {isModalOpen && selectedProject && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-90"
-          onContextMenu={(e) => e.preventDefault()}
-        >
-          <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-lg flex flex-col">
-            {/* Fixed header with dark background */}
-            <div className="sticky top-0 z-10 bg-gray-900 p-4 flex justify-between items-center">
-              <h2 className="text-2xl md:text-3xl font-bold text-white truncate max-w-[80%]">
-                {selectedProject.name}
-              </h2>
+  <div 
+    className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto p-4 bg-black bg-opacity-90"
+    onClick={closeModal}
+    onContextMenu={(e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }}
+  >
+    <div 
+      className="relative w-full max-w-6xl bg-white rounded-lg overflow-y-auto max-h-[calc(100vh-5rem)] mt-[4.5rem] mb-10 lg:mt-[5rem] lg:mb-12 p-4"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Modal Content */}
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
+
+        {/* Image Section */}
+        <div className="flex-1 lg:max-w-1/2">
+          <div 
+            className="relative bg-gray-100 rounded-lg overflow-hidden h-64 md:h-80 w-full flex items-center justify-center"
+            onContextMenu={(e) => e.preventDefault()}
+          >
+            <div className="absolute inset-0 flex items-center justify-center">
+              <ProtectedImage 
+                src={
+                  currentImageIndex === 0 
+                    ? selectedProject.image 
+                    : selectedProject.additionalImages?.[currentImageIndex - 1] || selectedProject.image
+                } 
+                alt={selectedProject.name || `${selectedProject.category} Project`} 
+              />
+            </div>
+
+            {/* Arrows */}
+            {selectedProject.additionalImages && selectedProject.additionalImages.length > 0 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    prevImage();
+                  }}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
+                  aria-label="Previous image"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextImage();
+                  }}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
+                  aria-label="Next image"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* Thumbnails */}
+          {selectedProject.additionalImages && selectedProject.additionalImages.length > 0 && (
+            <div className="mt-4 grid grid-cols-4 gap-2">
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentImageIndex(0);
+                }}
+                className={`aspect-square cursor-pointer border-2 ${currentImageIndex === 0 ? 'border-[#C4A962]' : 'border-transparent'} bg-gray-100 flex items-center justify-center`}
+              >
+                <ProtectedImage src={selectedProject.image} alt="Main view" />
+              </div>
+              {selectedProject.additionalImages.map((img, idx) => (
+                <div
+                  key={idx}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentImageIndex(idx + 1);
+                  }}
+                  className={`aspect-square cursor-pointer border-2 ${currentImageIndex === idx + 1 ? 'border-[#C4A962]' : 'border-transparent'} bg-gray-100 flex items-center justify-center`}
+                >
+                  <ProtectedImage src={img} alt={`Additional view ${idx + 1}`} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Details Section */}
+        <div className="flex-1 lg:max-w-1/2">
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-gray-800">Project Details</h3>
               <button 
-                onClick={closeModal}
-                className="text-white hover:text-gray-300 transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  closeModal();
+                }}
+                className="text-gray-500 hover:text-gray-700 transition-colors"
                 aria-label="Close modal"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
 
-            {/* Scrollable content */}
-            <div className="overflow-y-auto flex-1">
-              <div className="p-6">
-                <div className="flex flex-col lg:flex-row gap-8">
-                  {/* Image section */}
-                  <div className="flex-1">
-                    <div 
-                      className="relative bg-gray-100 rounded-lg overflow-hidden h-64 md:h-80 w-full flex items-center justify-center"
-                      onContextMenu={(e) => e.preventDefault()}
-                    >
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <ProtectedImage 
-                          src={
-                            currentImageIndex === 0 
-                              ? selectedProject.image 
-                              : selectedProject.additionalImages?.[currentImageIndex - 1] || selectedProject.image
-                          } 
-                          alt={selectedProject.name} 
-                        />
-                      </div>
-                      
-                      {selectedProject.additionalImages && selectedProject.additionalImages.length > 0 && (
-                        <>
-                          <button
-                            onClick={prevImage}
-                            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
-                            aria-label="Previous image"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                            </svg>
-                          </button>
-                          <button
-                            onClick={nextImage}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
-                            aria-label="Next image"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                          </button>
-                        </>
-                      )}
-                    </div>
-                    
-                    {selectedProject.additionalImages && selectedProject.additionalImages.length > 0 && (
-                      <div className="mt-4">
-                        <div className="grid grid-cols-4 gap-2">
-                          <div
-                            onClick={() => setCurrentImageIndex(0)}
-                            className={`aspect-square cursor-pointer border-2 ${currentImageIndex === 0 ? 'border-[#C4A962]' : 'border-transparent'} bg-gray-100 flex items-center justify-center`}
-                          >
-                            <ProtectedImage src={selectedProject.image} alt="Main view" />
-                          </div>
-                          {selectedProject.additionalImages.map((img, idx) => (
-                            <div
-                              key={idx}
-                              onClick={() => setCurrentImageIndex(idx + 1)}
-                              className={`aspect-square cursor-pointer border-2 ${currentImageIndex === idx + 1 ? 'border-[#C4A962]' : 'border-transparent'} bg-gray-100 flex items-center justify-center`}
-                            >
-                              <ProtectedImage src={img} alt={`Additional view ${idx + 1}`} />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Details section */}
-                  <div className="flex-1">
-                    <div className="space-y-6">
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-800 mb-2">Project Details</h3>
-                        <p className="text-gray-700 leading-relaxed">
-                          {selectedProject.description}
-                        </p>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-800 mb-2">Completion Date</h3>
-                        <p className="text-gray-700">{selectedProject.completionDate}</p>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-800 mb-2">Project Type</h3>
-                        <p className="text-gray-700 capitalize">
-                          {selected === 'Interior' && selectedProject.subcategory 
-                            ? `${selectedProject.subcategory} ${selected}` 
-                            : selected}
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <button
-                      onClick={closeModal}
-                      className="mt-8 bg-[#C4A962] text-black px-6 py-3 rounded-md font-medium hover:bg-[#D4B972] transition-colors w-full"
-                    >
-                      Close Project
-                    </button>
-                  </div>
-                </div>
-              </div>
+            <p className="text-gray-700 leading-relaxed">
+              {selectedProject.description}
+            </p>
+
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Completion Date</h3>
+              <p className="text-gray-700">{selectedProject.completionDate}</p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Project Type</h3>
+              <p className="text-gray-700 capitalize">
+                {selectedProject.category}
+                {selectedProject.subcategory ? ` • ${selectedProject.subcategory}` : ''}
+              </p>
             </div>
           </div>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              closeModal();
+            }}
+            className="mt-8 bg-[#C4A962] text-black px-6 py-3 rounded-md font-medium hover:bg-[#D4B972] transition-colors w-full"
+          >
+            Close Project
+          </button>
         </div>
-      )}
+      </div>
+    </div>
+  </div>
+)}
+
+
+
+
     </section>
   );
 }
