@@ -6,7 +6,7 @@ import bapiBhai from "../assets/bapi-bhai.jpg";
 import project3 from '../assets/rajendra-behera.jpg'; 
 import project4 from '../assets/sankar-sen.jpg'; 
 import img5 from '../assets/sandipan.jpg'; 
-import img6 from '../assets/WhatsApp Image 2025-04-10 at 13.55.06_3cd8c7a4.jpg'; 
+// import img6 from '../assets/WhatsApp Image 2025-04-10 at 13.55.06_3cd8c7a4.jpg'; 
 import img7 from '../assets/WhatsApp Image 2025-04-10 at 13.59.16_10b62b7b.jpg'; 
 import img9 from '../assets/WhatsApp Image 2025-04-10 at 14.09.27_29fee8a4.jpg'; 
 import img10 from '../assets/WhatsApp Image 2025-04-10 at 14.09.49_c70a5449.jpg'; 
@@ -73,7 +73,7 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       name: 'Sandipan Sarkar',
       description: 'Compact urban home with smart space utilization and minimalist design.',
       completionDate: 'May 20XX',
-      additionalImages: [img6],
+      // additionalImages: [img6],
       category: 'Residential'
     }
   ],
@@ -278,47 +278,51 @@ const ProtectedImage = ({ src, alt }: { src: string; alt: string }) => {
     img.crossOrigin = "anonymous";
     
     img.onload = () => {
+      // Set canvas dimensions to match the image's aspect ratio
       const container = canvas.parentElement;
       if (!container) return;
       
-      canvas.width = container.clientWidth;
-      canvas.height = container.clientHeight;
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
       
       const imgRatio = img.width / img.height;
-      const canvasRatio = canvas.width / canvas.height;
+      const containerRatio = containerWidth / containerHeight;
       
-      let drawWidth, drawHeight, dx, dy;
+      let canvasWidth, canvasHeight;
       
-      if (imgRatio > canvasRatio) {
-        drawHeight = canvas.height;
-        drawWidth = drawHeight * imgRatio;
-        dx = (canvas.width - drawWidth) / 2;
-        dy = 0;
+      if (imgRatio > containerRatio) {
+        // Image is wider than container - fit to width
+        canvasWidth = containerWidth;
+        canvasHeight = canvasWidth / imgRatio;
       } else {
-        drawWidth = canvas.width;
-        drawHeight = drawWidth / imgRatio;
-        dx = 0;
-        dy = (canvas.height - drawHeight) / 2;
+        // Image is taller than container - fit to height
+        canvasHeight = containerHeight;
+        canvasWidth = canvasHeight * imgRatio;
       }
       
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
       
-      // Single, light watermark
+      // Clear and draw the image
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      
+      // Watermark
       ctx.font = 'bold 24px Arial';
       ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.save();
       ctx.translate(canvas.width/2, canvas.height/2);
-      ctx.rotate(-Math.PI/8); // Less rotation
+      ctx.rotate(-Math.PI/8);
       ctx.fillText('© Ecoscape', 0, 0);
       ctx.restore();
     };
 
     img.onerror = () => {
+      // Fallback to CSS background if canvas drawing fails
       canvas.style.backgroundImage = `url(${src})`;
-      canvas.style.backgroundSize = 'cover';
+      canvas.style.backgroundSize = 'contain';
       canvas.style.backgroundPosition = 'center';
       canvas.style.backgroundRepeat = 'no-repeat';
     };
@@ -327,7 +331,7 @@ const ProtectedImage = ({ src, alt }: { src: string; alt: string }) => {
   return (
     <canvas 
       ref={canvasRef} 
-      className="w-full h-full object-cover pointer-events-none"
+      className="w-full h-full object-contain pointer-events-none"
       aria-label={alt}
       onContextMenu={(e) => e.preventDefault()}
     />
@@ -589,26 +593,30 @@ export default function Projects() {
                 >
                   {getFilteredProjects().map((project: Project, index: number) => (
                     <motion.div 
-                    key={`${project.category}-${index}`}
-                    variants={projectItem}
-                    className="overflow-hidden rounded-lg shadow-lg relative group cursor-pointer h-96"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      openModal(project);
-                    }}
-                    onContextMenu={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
-                  >
-                    <div className="relative w-full h-full">
-                      <div className="absolute inset-0 flex items-center justify-center bg-black overflow-hidden">
-                        <ProtectedImage src={project.image} alt={`${project.category} Work ${index + 1}`} />
-                      </div>
-                      <WatermarkOverlay />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end">
-                        <div className="p-4 pb-6">
-                          <h3 className="text-white text-xl font-bold mb-3 line-clamp-2 min-h-[3rem] flex items-center">
+                      key={`${project.category}-${index}`}
+                      variants={projectItem}
+                      className="overflow-hidden rounded-lg shadow-lg relative group cursor-pointer h-96"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openModal(project);
+                      }}
+                      onContextMenu={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                      }}
+                    >
+                      <div className="relative w-full h-full flex flex-col">
+                        {/* Image container with fixed height */}
+                        <div className="relative flex-1 overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center bg-black">
+                            <ProtectedImage src={project.image} alt={`${project.category} Work ${index + 1}`} />
+                          </div>
+                          <WatermarkOverlay />
+                        </div>
+                        
+                        {/* Text content container with fixed height */}
+                        <div className="bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 h-32 flex flex-col justify-end">
+                          <h3 className="text-white text-xl font-bold mb-1 line-clamp-2">
                             {project.category === 'Interior' && !project.name 
                               ? '' 
                               : project.name || `${project.category} Project`}
@@ -629,8 +637,7 @@ export default function Projects() {
                           </button>
                         </div>
                       </div>
-                    </div>
-                  </motion.div>
+                    </motion.div>
                   ))}
                 </motion.div>
               </motion.div>
@@ -641,7 +648,7 @@ export default function Projects() {
 
       {isModalOpen && selectedProject && (
   <div 
-    className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto p-4 bg-black bg-opacity-90"
+    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-90"
     onClick={closeModal}
     onContextMenu={(e) => {
       e.preventDefault();
@@ -649,143 +656,100 @@ export default function Projects() {
     }}
   >
     <div 
-      className="relative w-full max-w-6xl bg-white rounded-lg overflow-y-auto max-h-[calc(100vh-5rem)] mt-[4.5rem] mb-10 lg:mt-[5rem] lg:mb-12 p-4"
+      className="relative w-full max-w-6xl bg-white rounded-lg overflow-hidden max-h-[90vh] flex flex-col lg:flex-row"
       onClick={(e) => e.stopPropagation()}
     >
-      {/* Modal Content */}
-      <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
+      {/* Close button */}
+      <button 
+        onClick={closeModal}
+        className="absolute top-[80px] right-4 z-50 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+        aria-label="Close modal"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
 
-        {/* Image Section */}
-        <div className="flex-1 lg:max-w-1/2">
-          <div 
-            className="relative bg-gray-100 rounded-lg overflow-hidden h-64 md:h-80 w-full flex items-center justify-center"
-            onContextMenu={(e) => e.preventDefault()}
-          >
-            <div className="absolute inset-0 flex items-center justify-center">
-              <ProtectedImage 
-                src={
-                  currentImageIndex === 0 
-                    ? selectedProject.image 
-                    : selectedProject.additionalImages?.[currentImageIndex - 1] || selectedProject.image
-                } 
-                alt={selectedProject.name || `${selectedProject.category} Project`} 
-              />
-            </div>
-
-            {/* Arrows */}
-            {selectedProject.additionalImages && selectedProject.additionalImages.length > 0 && (
-              <>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    prevImage();
-                  }}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
-                  aria-label="Previous image"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    nextImage();
-                  }}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
-                  aria-label="Next image"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </>
-            )}
-          </div>
-
-          {/* Thumbnails */}
-          {selectedProject.additionalImages && selectedProject.additionalImages.length > 0 && (
-            <div className="mt-4 grid grid-cols-4 gap-2">
-              <div
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setCurrentImageIndex(0);
-                }}
-                className={`aspect-square cursor-pointer border-2 ${currentImageIndex === 0 ? 'border-[#C4A962]' : 'border-transparent'} bg-gray-100 flex items-center justify-center`}
-              >
-                <ProtectedImage src={selectedProject.image} alt="Main view" />
-              </div>
-              {selectedProject.additionalImages.map((img, idx) => (
-                <div
-                  key={idx}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrentImageIndex(idx + 1);
-                  }}
-                  className={`aspect-square cursor-pointer border-2 ${currentImageIndex === idx + 1 ? 'border-[#C4A962]' : 'border-transparent'} bg-gray-100 flex items-center justify-center`}
-                >
-                  <ProtectedImage src={img} alt={`Additional view ${idx + 1}`} />
-                </div>
-              ))}
-            </div>
-          )}
+      {/* Image Section - Takes 70% width on large screens */}
+      <div className="w-full lg:w-[70%] h-[50vh] lg:h-auto relative bg-gray-100 flex items-center justify-center">
+        <div 
+          className="relative w-full h-full flex items-center justify-center overflow-auto"
+          onContextMenu={(e) => e.preventDefault()}
+        >
+          <ProtectedImage 
+            src={
+              currentImageIndex === 0 
+                ? selectedProject.image 
+                : selectedProject.additionalImages?.[currentImageIndex - 1] || selectedProject.image
+            } 
+            alt={selectedProject.name || `${selectedProject.category} Project`} 
+          />
         </div>
 
-        {/* Details Section */}
-        <div className="flex-1 lg:max-w-1/2">
-          <div className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-gray-800">Project Details</h3>
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  closeModal();
-                }}
-                className="text-gray-500 hover:text-gray-700 transition-colors"
-                aria-label="Close modal"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
+        {/* Arrows */}
+        {selectedProject.additionalImages && selectedProject.additionalImages.length > 0 && (
+          <>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                prevImage();
+              }}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
+              aria-label="Previous image"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                nextImage();
+              }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
+              aria-label="Next image"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </>
+        )}
+      </div>
 
-            <p className="text-gray-700 leading-relaxed">
-              {selectedProject.description}
+      {/* Details Section - Takes 30% width on large screens */}
+      <div className="w-full lg:w-[30%] p-6 overflow-y-auto flex flex-col ">
+        <div className="flex-grow mt-40">
+          <h3 className="text-xl font-bold text-gray-800 mb-4">Project Details</h3>
+          
+          <p className="text-gray-600 text-sm leading-relaxed mb-4">
+            {selectedProject.description}
+          </p>
+
+          <div className="border-t border-gray-200 pt-4 mb-4">
+            <h4 className="text-sm font-semibold text-gray-800 mb-1">Completion Date</h4>
+            <p className="text-gray-600 text-sm">{selectedProject.completionDate}</p>
+          </div>
+
+          <div className="border-t border-gray-200 pt-4 mb-4">
+            <h4 className="text-sm font-semibold text-gray-800 mb-1">Project Type</h4>
+            <p className="text-gray-600 text-sm capitalize">
+              {selectedProject.category}
+              {selectedProject.subcategory ? ` • ${selectedProject.subcategory}` : ''}
             </p>
-
-            <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">Completion Date</h3>
-              <p className="text-gray-700">{selectedProject.completionDate}</p>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">Project Type</h3>
-              <p className="text-gray-700 capitalize">
-                {selectedProject.category}
-                {selectedProject.subcategory ? ` • ${selectedProject.subcategory}` : ''}
-              </p>
-            </div>
           </div>
-
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              closeModal();
-            }}
-            className="mt-8 bg-[#C4A962] text-black px-6 py-3 rounded-md font-medium hover:bg-[#D4B972] transition-colors w-full"
-          >
-            Close Project
-          </button>
         </div>
+
+        <button
+          onClick={closeModal}
+          className="bg-[#C4A962] text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-[#D4B972] transition-colors w-full mt-auto"
+        >
+          Close Project
+        </button>
       </div>
     </div>
   </div>
 )}
-
-
-
-
     </section>
   );
 }
