@@ -238,76 +238,21 @@ interface ProtectedImageProps {
   src: string;
   alt: string;
   className?: string;
+  priority?: boolean;
 }
 
-const ProtectedImage = ({ src, alt, className = '' }: ProtectedImageProps) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    if (!canvasRef.current) return;
-
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const img = new Image();
-    img.src = src;
-    img.crossOrigin = "anonymous";
-    
-    img.onload = () => {
-      const container = canvas.parentElement;
-      if (!container) return;
-      
-      const containerWidth = container.clientWidth;
-      const containerHeight = container.clientHeight;
-      
-      const imgRatio = img.width / img.height;
-      const containerRatio = containerWidth / containerHeight;
-      
-      let canvasWidth, canvasHeight;
-      
-      if (imgRatio > containerRatio) {
-        canvasWidth = containerWidth;
-        canvasHeight = canvasWidth / imgRatio;
-      } else {
-        canvasHeight = containerHeight;
-        canvasWidth = canvasHeight * imgRatio;
-      }
-      
-      canvas.width = canvasWidth;
-      canvas.height = canvasHeight;
-      
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      
-      ctx.font = 'bold 24px Arial';
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.save();
-      ctx.translate(canvas.width/2, canvas.height/2);
-      ctx.rotate(-Math.PI/8);
-      ctx.fillText('© Ecoscape', 0, 0);
-      ctx.restore();
-    };
-
-    img.onerror = () => {
-      if (canvasRef.current) {
-        canvasRef.current.style.backgroundImage = `url(${src})`;
-        canvasRef.current.style.backgroundSize = 'contain';
-        canvasRef.current.style.backgroundPosition = 'center';
-        canvasRef.current.style.backgroundRepeat = 'no-repeat';
-      }
-    };
-  }, [src]);
-
+const ProtectedImage = ({ src, alt, className = '', priority = false }: ProtectedImageProps) => {
   return (
-    <canvas 
-      ref={canvasRef} 
-      className={`w-full h-full object-contain pointer-events-none ${className}`}
-      aria-label={alt}
-      onContextMenu={(e) => e.preventDefault()}
-    />
+    <div className={`relative w-full h-full ${className}`}>
+      <img
+        src={src}
+        alt={alt}
+        className="w-full h-full object-cover pointer-events-none"
+        onContextMenu={(e) => e.preventDefault()}
+        loading={priority ? "eager" : "lazy"}
+      />
+      <WatermarkOverlay />
+    </div>
   );
 };
 
@@ -581,9 +526,12 @@ export default function Projects() {
                       <div className="relative w-full h-full flex flex-col">
                         <div className="relative flex-1 overflow-hidden">
                           <div className="absolute inset-0 flex items-center justify-center bg-black">
-                            <ProtectedImage src={project.image} alt={`${project.category} Work ${index + 1}`} />
+                            <ProtectedImage 
+                              src={project.image} 
+                              alt={`${project.category} Work ${index + 1}`}
+                              priority={index < 6} // Load first 6 images eagerly
+                            />
                           </div>
-                          <WatermarkOverlay />
                         </div>
                         
                         <div className="bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 h-32 flex flex-col justify-end">
@@ -644,13 +592,15 @@ export default function Projects() {
                 onContextMenu={(e) => e.preventDefault()}
               >
                 <div className="w-full h-full flex items-center justify-center p-2">
-                  <ProtectedImage 
+                  <img
                     src={
                       currentImageIndex === 0 
                         ? selectedProject.image 
                         : selectedProject.additionalImages?.[currentImageIndex - 1] || selectedProject.image
-                    } 
+                    }
                     alt={selectedProject.name || `${selectedProject.category} Project`}
+                    className="max-w-full max-h-full object-contain"
+                    onContextMenu={(e) => e.preventDefault()}
                   />
                 </div>
               </div>
