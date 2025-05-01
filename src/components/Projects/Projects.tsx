@@ -6,7 +6,6 @@ import bapiBhai from "../assets/bapi-bhai.jpg";
 import project3 from '../assets/rajendra-behera.jpg'; 
 import project4 from '../assets/sankar-sen.jpg'; 
 import img5 from '../assets/sandipan.jpg'; 
-// import img6 from '../assets/WhatsApp Image 2025-04-10 at 13.55.06_3cd8c7a4.jpg'; 
 import img7 from '../assets/WhatsApp Image 2025-04-10 at 13.59.16_10b62b7b.jpg'; 
 import img9 from '../assets/WhatsApp Image 2025-04-10 at 14.09.27_29fee8a4.jpg'; 
 import img10 from '../assets/WhatsApp Image 2025-04-10 at 14.09.49_c70a5449.jpg'; 
@@ -45,7 +44,6 @@ interface Project {
   image: string;
   name: string;
   description: string;
-  completionDate: string;
   additionalImages?: string[];
   subcategory?: InteriorSubcategory;
   category: 'Residential' | 'Commercial' | 'Interior';
@@ -57,7 +55,6 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: project3,
       name: 'Rajendra Behera',
       description: 'Luxury villa with premium finishes and custom architectural details.',
-      completionDate: 'November 20XX',
       additionalImages: [img13, img14],
       category: 'Residential'
     },
@@ -65,15 +62,12 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: project4,
       name: 'Sankar Sen',
       description: 'Elegant residence with traditional influences and modern comforts.',
-      completionDate: 'August 20XX',
       category: 'Residential'
     },
     {
       image: img5,
       name: 'Sandipan Sarkar',
       description: 'Compact urban home with smart space utilization and minimalist design.',
-      completionDate: 'May 20XX',
-      // additionalImages: [img6],
       category: 'Residential'
     }
   ],
@@ -82,7 +76,6 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: img7,
       name: 'Toyota Showroom-Balasore',
       description: 'A sleek and professional corporate office space designed for the Toyota brand, blending functionality with modern aesthetics. This workspace features open-plan collaborative areas, private meeting rooms, and state-of-the-art facilities tailored for productivity and innovation. The design emphasizes clean lines, brand-themed elements, and a welcoming atmosphere for both staff and clients.',
-      completionDate: 'April 20XX',
       additionalImages: [img9, img10, img12, img11, img15],
       category: 'Commercial'
     },
@@ -90,7 +83,6 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: img34,
       name: 'Toyota Showroom-Baripada',
       description: 'A sleek and professional corporate office space designed for the Toyota brand, blending functionality with modern aesthetics. This workspace features open-plan collaborative areas, private meeting rooms, and state-of-the-art facilities tailored for productivity and innovation. The design emphasizes clean lines, brand-themed elements, and a welcoming atmosphere for both staff and clients.',
-      completionDate: 'April 20XX',
       additionalImages: [img35, img36, img37],
       category: 'Commercial'
     },
@@ -98,7 +90,6 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: bapiBhai,
       name: 'Shree Nivas-Appartment',
       description: 'A beautiful residential property with modern amenities and elegant design.',
-      completionDate: 'March 20XX',
       additionalImages: [img18, img16],
       category: 'Commercial'
     },
@@ -109,7 +100,6 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: img17,
       name: '',
       description: 'A cozy and tranquil bedroom retreat designed for comfort and relaxation. Featuring soft lighting, warm textures, and a harmonious color palette, the space creates a serene ambiance ideal for unwinding. Thoughtful furnishings, ample storage, and subtle design accents ensure both style and functionality, making it a perfect personal sanctuary.',
-      completionDate: 'April 20XX',
       subcategory: 'Bedroom',
       category: 'Interior'
     },
@@ -117,7 +107,6 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: img21,
       name: '',
       description: 'A cozy and tranquil bedroom retreat designed for comfort and relaxation. Featuring soft lighting, warm textures, and a harmonious color palette, the space creates a serene ambiance ideal for unwinding. Thoughtful furnishings, ample storage, and subtle design accents ensure both style and functionality, making it a perfect personal sanctuary.',
-      completionDate: 'August 20XX',
       subcategory: 'Bedroom',
       category: 'Interior'
     },
@@ -125,7 +114,6 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: img22,
       name: '',
       description: 'Luxurious sleeping quarters with premium bedding and decor.',
-      completionDate: 'September 20XX',
       subcategory: 'Bedroom',
       category: 'Interior'
     },
@@ -133,7 +121,6 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: img26,
       name: '',
       description: 'First design option for primary bedroom with neutral palette.',
-      completionDate: 'January 20XX',
       subcategory: 'Bedroom',
       category: 'Interior'
     },
@@ -141,7 +128,6 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: img27,
       name: '',
       description: 'Second design option with warmer tones and textured finishes.',
-      completionDate: 'February 20XX',
       subcategory: 'Bedroom',
       category: 'Interior'
     },
@@ -149,7 +135,6 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: img28,
       name: '',
       description: 'Third design option featuring bold colors and modern art.',
-      completionDate: 'March 20XX',
       subcategory: 'Bedroom',
       category: 'Interior'
     },
@@ -157,7 +142,6 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: img29,
       name: '',
       description: 'First option for accommodations with minimalist design.',
-      completionDate: 'April 20XX',
       subcategory: 'Bedroom',
       category: 'Interior'
     },
@@ -165,7 +149,6 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: img30,
       name: '',
       description: 'Second option with more traditional furnishings and decor.',
-      completionDate: 'May 20XX',
       subcategory: 'Bedroom',
       category: 'Interior'
     },
@@ -175,7 +158,6 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: img23,
       name: '',
       description: 'Elegant dining space for entertaining guests and family gatherings.',
-      completionDate: 'October 20XX',
       subcategory: 'Dining',
       category: 'Interior'
     },
@@ -183,7 +165,6 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: img24,
       name: '',
       description: 'Casual dining area with comfortable seating and natural light.',
-      completionDate: 'November 20XX',
       subcategory: 'Dining',
       category: 'Interior'
     },
@@ -193,55 +174,45 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       image: img20,
       name: '',
       description: 'Modern living room with elegant furniture and lighting fixtures.',
-      completionDate: 'July 20XX',
       subcategory: 'Living Room',
       category: 'Interior'
     },
-
     {
       image: img31,
       name: '',
       description: 'Home theater with premium audio-visual equipment and seating.',
-      completionDate: 'June 20XX',
       subcategory: 'Living Room',
       category: 'Interior'
     },
-    
     {
       image: img32,
       name: '',
       description: 'Spacious living area with modern design elements.',
-      completionDate: 'July 20XX',
       subcategory: 'Living Room',
       category: 'Interior'
     },
     
     // Office projects
-    
     {
       image: img25,
       name: '',
-      description: 'Contemporary living space with modern furniture and decor.',
-      completionDate: 'December 20XX',
+      description: 'Contemporary Office space with modern furniture and decor.',
       subcategory: 'Office',
       category: 'Interior'
     },
     {
       image: img19,
       name: '',
-      description: 'Beautifully crafted Durga Puja pandal with intricate designs and decorations.',
-      completionDate: 'June 20XX',
+      description: 'Beautifully crafted office with intricate designs and decorations.',
       subcategory: 'Office',
       category: 'Interior'
     },
     
     // Puja Room projects
-    
     {
       image: img33,
       name: '',
       description: 'Sacred space designed for worship and meditation.',
-      completionDate: 'August 20XX',
       subcategory: 'Puja Room',
       category: 'Interior'
     }
@@ -263,7 +234,13 @@ const WatermarkOverlay = () => (
   </div>
 );
 
-const ProtectedImage = ({ src, alt }: { src: string; alt: string }) => {
+interface ProtectedImageProps {
+  src: string;
+  alt: string;
+  className?: string;
+}
+
+const ProtectedImage = ({ src, alt, className = '' }: ProtectedImageProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -278,7 +255,6 @@ const ProtectedImage = ({ src, alt }: { src: string; alt: string }) => {
     img.crossOrigin = "anonymous";
     
     img.onload = () => {
-      // Set canvas dimensions to match the image's aspect ratio
       const container = canvas.parentElement;
       if (!container) return;
       
@@ -291,11 +267,9 @@ const ProtectedImage = ({ src, alt }: { src: string; alt: string }) => {
       let canvasWidth, canvasHeight;
       
       if (imgRatio > containerRatio) {
-        // Image is wider than container - fit to width
         canvasWidth = containerWidth;
         canvasHeight = canvasWidth / imgRatio;
       } else {
-        // Image is taller than container - fit to height
         canvasHeight = containerHeight;
         canvasWidth = canvasHeight * imgRatio;
       }
@@ -303,11 +277,9 @@ const ProtectedImage = ({ src, alt }: { src: string; alt: string }) => {
       canvas.width = canvasWidth;
       canvas.height = canvasHeight;
       
-      // Clear and draw the image
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       
-      // Watermark
       ctx.font = 'bold 24px Arial';
       ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
       ctx.textAlign = 'center';
@@ -320,18 +292,19 @@ const ProtectedImage = ({ src, alt }: { src: string; alt: string }) => {
     };
 
     img.onerror = () => {
-      // Fallback to CSS background if canvas drawing fails
-      canvas.style.backgroundImage = `url(${src})`;
-      canvas.style.backgroundSize = 'contain';
-      canvas.style.backgroundPosition = 'center';
-      canvas.style.backgroundRepeat = 'no-repeat';
+      if (canvasRef.current) {
+        canvasRef.current.style.backgroundImage = `url(${src})`;
+        canvasRef.current.style.backgroundSize = 'contain';
+        canvasRef.current.style.backgroundPosition = 'center';
+        canvasRef.current.style.backgroundRepeat = 'no-repeat';
+      }
     };
   }, [src]);
 
   return (
     <canvas 
       ref={canvasRef} 
-      className="w-full h-full object-contain pointer-events-none"
+      className={`w-full h-full object-contain pointer-events-none ${className}`}
       aria-label={alt}
       onContextMenu={(e) => e.preventDefault()}
     />
@@ -606,7 +579,6 @@ export default function Projects() {
                       }}
                     >
                       <div className="relative w-full h-full flex flex-col">
-                        {/* Image container with fixed height */}
                         <div className="relative flex-1 overflow-hidden">
                           <div className="absolute inset-0 flex items-center justify-center bg-black">
                             <ProtectedImage src={project.image} alt={`${project.category} Work ${index + 1}`} />
@@ -614,7 +586,6 @@ export default function Projects() {
                           <WatermarkOverlay />
                         </div>
                         
-                        {/* Text content container with fixed height */}
                         <div className="bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 h-32 flex flex-col justify-end">
                           <h3 className="text-white text-xl font-bold mb-1 line-clamp-2">
                             {project.category === 'Interior' && !project.name 
@@ -625,9 +596,6 @@ export default function Projects() {
                             <span className="text-[#C4A962] text-sm capitalize">
                               {project.category}
                               {project.subcategory ? ` • ${project.subcategory}` : ''}
-                            </span>
-                            <span className="text-white/70 text-xs">
-                              {project.completionDate}
                             </span>
                           </div>
                           <button
@@ -647,109 +615,103 @@ export default function Projects() {
       </motion.div>
 
       {isModalOpen && selectedProject && (
-  <div 
-    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-90"
-    onClick={closeModal}
-    onContextMenu={(e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    }}
-  >
-    <div 
-      className="relative w-full max-w-6xl bg-white rounded-lg overflow-hidden max-h-[90vh] flex flex-col lg:flex-row"
-      onClick={(e) => e.stopPropagation()}
-    >
-      {/* Close button */}
-      <button 
-        onClick={closeModal}
-        className="absolute top-[80px] right-4 z-50 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
-        aria-label="Close modal"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-
-      {/* Image Section - Takes 70% width on large screens */}
-      <div className="w-full lg:w-[70%] h-[50vh] lg:h-auto relative bg-gray-100 flex items-center justify-center">
         <div 
-          className="relative w-full h-full flex items-center justify-center overflow-auto"
-          onContextMenu={(e) => e.preventDefault()}
-        >
-          <ProtectedImage 
-            src={
-              currentImageIndex === 0 
-                ? selectedProject.image 
-                : selectedProject.additionalImages?.[currentImageIndex - 1] || selectedProject.image
-            } 
-            alt={selectedProject.name || `${selectedProject.category} Project`} 
-          />
-        </div>
-
-        {/* Arrows */}
-        {selectedProject.additionalImages && selectedProject.additionalImages.length > 0 && (
-          <>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                prevImage();
-              }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
-              aria-label="Previous image"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                nextImage();
-              }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
-              aria-label="Next image"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </>
-        )}
-      </div>
-
-      {/* Details Section - Takes 30% width on large screens */}
-      <div className="w-full lg:w-[30%] p-6 overflow-y-auto flex flex-col ">
-        <div className="flex-grow mt-40">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Project Details</h3>
-          
-          <p className="text-gray-600 text-sm leading-relaxed mb-4">
-            {selectedProject.description}
-          </p>
-
-          <div className="border-t border-gray-200 pt-4 mb-4">
-            <h4 className="text-sm font-semibold text-gray-800 mb-1">Completion Date</h4>
-            <p className="text-gray-600 text-sm">{selectedProject.completionDate}</p>
-          </div>
-
-          <div className="border-t border-gray-200 pt-4 mb-4">
-            <h4 className="text-sm font-semibold text-gray-800 mb-1">Project Type</h4>
-            <p className="text-gray-600 text-sm capitalize">
-              {selectedProject.category}
-              {selectedProject.subcategory ? ` • ${selectedProject.subcategory}` : ''}
-            </p>
-          </div>
-        </div>
-
-        <button
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-90"
           onClick={closeModal}
-          className="bg-[#C4A962] text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-[#D4B972] transition-colors w-full mt-auto"
+          onContextMenu={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
         >
-          Close Project
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+          <div 
+            className="relative w-full max-w-6xl bg-white rounded-lg overflow-hidden max-h-[90vh] flex flex-col lg:flex-row"
+            onClick={(e) => e.stopPropagation()}
+            style={{ maxHeight: '90vh' }}
+          >
+            <button 
+              onClick={closeModal}
+              className="absolute top-4 lg:top-[120px] right-4 z-50 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+              aria-label="Close modal"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div className="w-full lg:w-[70%] h-[70vh] lg:h-auto relative bg-gray-100 flex items-center justify-center">
+              <div 
+                className="relative w-full h-full flex items-center justify-center overflow-auto"
+                onContextMenu={(e) => e.preventDefault()}
+              >
+                <div className="w-full h-full flex items-center justify-center p-2">
+                  <ProtectedImage 
+                    src={
+                      currentImageIndex === 0 
+                        ? selectedProject.image 
+                        : selectedProject.additionalImages?.[currentImageIndex - 1] || selectedProject.image
+                    } 
+                    alt={selectedProject.name || `${selectedProject.category} Project`}
+                  />
+                </div>
+              </div>
+
+              {selectedProject.additionalImages && selectedProject.additionalImages.length > 0 && (
+                <>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      prevImage();
+                    }}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
+                    aria-label="Previous image"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      nextImage();
+                    }}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
+                    aria-label="Next image"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </>
+              )}
+            </div>
+
+            <div className="w-full lg:w-[30%] p-6 overflow-y-auto flex flex-col">
+              <div className="flex-grow mt-6 lg:mt-40">
+                <h3 className="text-xl font-bold text-gray-800 mb-4">Project Details</h3>
+                
+                <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                  {selectedProject.description}
+                </p>
+
+                <div className="border-t border-gray-200 pt-4 mb-4">
+                  <h4 className="text-sm font-semibold text-gray-800 mb-1">Project Type</h4>
+                  <p className="text-gray-600 text-sm capitalize">
+                    {selectedProject.category}
+                    {selectedProject.subcategory ? ` • ${selectedProject.subcategory}` : ''}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={closeModal}
+                className="bg-[#C4A962] text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-[#D4B972] transition-colors w-full mt-auto"
+              >
+                Close Project
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
