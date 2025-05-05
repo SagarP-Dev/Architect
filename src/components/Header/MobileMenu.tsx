@@ -28,7 +28,7 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
   const socialLinks = [
     {
       icon: <Instagram size={16} />,
-      url: 'https://www.instagram.com',
+      url: 'https://www.instagram.com/_eco.scape_?igsh=enZlazVuMjJpd3J1',
       label: 'Instagram'
     },
     {

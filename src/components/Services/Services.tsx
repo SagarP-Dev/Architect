@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
 import { fadeInUp, staggerContainer } from '../utils/animations';
-import { Home, Briefcase, Layout } from 'lucide-react'; // Lucide icons
+import { Home, Briefcase, Layout } from 'lucide-react'; 
 
 export default function Services() {
   const services = [

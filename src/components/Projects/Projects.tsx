@@ -329,12 +329,32 @@ export default function Projects() {
     setIsModalOpen(true);
     setCurrentImageIndex(0);
     document.body.style.overflow = 'hidden';
+    // Push a new state to history when modal opens
+    window.history.pushState({ modalOpen: true }, '');
   }, []);
 
   const closeModal = useCallback(() => {
     setIsModalOpen(false);
     document.body.style.overflow = 'auto';
+    // Remove the state we added when closing modal
+    if (window.history.state?.modalOpen) {
+      window.history.back();
+    }
   }, []);
+
+  // Handle back button for mobile
+  useEffect(() => {
+    const handlePopState = () => {
+      if (isModalOpen) {
+        closeModal();
+        // Push another state to prevent going back further
+        window.history.pushState(null, '', window.location.pathname);
+      }
+    };
+  
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [isModalOpen, closeModal]);
 
   const nextImage = useCallback(() => {
     if (!selectedProject?.additionalImages) return;
@@ -576,9 +596,21 @@ export default function Projects() {
             onClick={(e) => e.stopPropagation()}
             style={{ maxHeight: '90vh' }}
           >
+            {/* Mobile close button (always visible on mobile) */}
             <button 
               onClick={closeModal}
-              className="absolute top-4 lg:top-[120px] right-4 z-50 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+              className="lg:hidden absolute top-2 right-2 z-50 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+              aria-label="Close modal"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Desktop close button (only visible on desktop) */}
+            <button 
+              onClick={closeModal}
+              className="hidden lg:block absolute top-4 lg:top-[120px] right-4 z-50 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
               aria-label="Close modal"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

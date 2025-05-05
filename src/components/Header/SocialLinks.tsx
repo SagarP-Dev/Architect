@@ -4,7 +4,7 @@ export default function SocialLinks() {
   return (
     <div className="fixed left-4 top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-6 z-50">
       <a 
-        href="https://www.instagram.com" 
+        href="https://www.instagram.com/_eco.scape_?igsh=enZlazVuMjJpd3J1" 
         target="_blank" 
         rel="noopener noreferrer"
         className="social-link"
