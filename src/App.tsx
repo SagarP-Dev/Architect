@@ -1,5 +1,4 @@
-// App.tsx
-import { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Hero from './components/Hero/Hero';
 import Projects from './components/Projects/Projects';
@@ -10,23 +9,23 @@ import Background from './components/Background/Background';
 import RunningText from './components/RunningText';
 
 function App() {
-  useEffect(() => {
-    document.documentElement.style.scrollBehavior = 'smooth';
-    return () => {
-      document.documentElement.style.scrollBehavior = 'auto';
-    };
-  }, []);
-
   return (
     <div className="text-white">
-      
       <Header />
       <Background>
-        <Hero />
-        <Projects />
-        <Services />
-        <About />
-        <Contact />
+        <Routes>
+          <Route path="/" element={
+            <>
+              <Hero />
+              <Projects />
+              <Services />
+              <About />
+              <Contact />
+            </>
+          } />
+          <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
       </Background>
       <RunningText />
     </div>

@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
 import { fadeInUp, staggerContainer } from '../utils/animations';
-import { Home, Briefcase, Layout, Palette, Ruler, Lightbulb } from 'lucide-react'; 
+import { Home, Briefcase, Layout, Palette, Ruler, Lightbulb } from 'lucide-react';
+import { Link } from 'react-scroll'; // ✅ Import react-scroll
 
 export default function Services() {
   const services = [
@@ -9,54 +10,54 @@ export default function Services() {
       icon: <Home size={32} className="text-[#C4A962]" />,
       title: 'Residential Design',
       description:
-        'We create cozy, stylish homes that reflect your personality and bring warmth to your everyday living space. Every detail is curated for comfort and functionality.',
+        'We create cozy, stylish homes that reflect your personality and bring warmth to your everyday living space.',
       features: ['Custom home design', 'Space planning', 'Furniture selection']
     },
     {
       icon: <Briefcase size={32} className="text-[#C4A962]" />,
       title: 'Commercial Design',
       description:
-        'From offices to retail spaces, we design professional yet inviting environments that boost productivity and leave a lasting impression on clients and customers.',
+        'From offices to retail spaces, we design professional yet inviting environments that boost productivity.',
       features: ['Office layouts', 'Brand integration', 'Ergonomic solutions']
     },
     {
       icon: <Layout size={32} className="text-[#C4A962]" />,
       title: 'Interior Design',
       description:
-        'We specialize in transforming interiors with a perfect blend of aesthetics and practicality—tailored to your taste, needs, and lifestyle.',
+        'We specialize in transforming interiors with a perfect blend of aesthetics and practicality.',
       features: ['Color schemes', 'Material selection', 'Lighting design']
     },
     {
       icon: <Palette size={32} className="text-[#C4A962]" />,
       title: 'Color Consultation',
       description:
-        'Expert guidance in selecting the perfect color palette to create harmony and evoke the desired mood in your space.',
+        'Expert guidance in selecting the perfect color palette to create harmony and evoke the right mood.',
       features: ['Color psychology', 'Finish selection', 'Mood boards']
     },
     {
       icon: <Ruler size={32} className="text-[#C4A962]" />,
       title: 'Space Planning',
       description:
-        'Optimizing your space for maximum functionality and flow while maintaining aesthetic appeal.',
+        'Optimizing your space for functionality and flow while keeping aesthetics intact.',
       features: ['Furniture layout', 'Traffic flow', 'Storage solutions']
     },
     {
       icon: <Lightbulb size={32} className="text-[#C4A962]" />,
       title: 'Lighting Design',
       description:
-        'Creating layered lighting schemes that enhance architecture, highlight features, and set the right ambiance.',
+        'Creating lighting schemes that enhance your space and mood.',
       features: ['Task lighting', 'Ambient lighting', 'Accent lighting']
     }
   ];
 
   return (
     <section id="services" className="min-h-screen bg-[#111111] py-28 px-6 lg:px-24 relative overflow-hidden">
-      {/* Decorative elements */}
+      {/* Decorative Blurs */}
       <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
         <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-[#C4A962] filter blur-3xl"></div>
         <div className="absolute bottom-10 right-10 w-40 h-40 rounded-full bg-[#C4A962] filter blur-3xl"></div>
       </div>
-      
+
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -64,33 +65,33 @@ export default function Services() {
         variants={staggerContainer}
         className="max-w-7xl mx-auto relative"
       >
-        {/* Section header */}
+        {/* Section Header */}
         <div className="text-center mb-16">
-          <motion.p 
+          <motion.p
             variants={fadeInUp}
             className="text-[#C4A962] uppercase tracking-widest text-sm mb-4"
           >
             What We Offer
           </motion.p>
-          <motion.h2 
+          <motion.h2
             variants={fadeInUp}
             className="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-4"
           >
             Our Premium Services
           </motion.h2>
-          <motion.div 
+          <motion.div
             variants={fadeInUp}
             className="w-20 h-1 bg-[#C4A962] mx-auto"
           ></motion.div>
         </div>
-        
-        {/* Services grid */}
-        <motion.div 
+
+        {/* Services Grid */}
+        <motion.div
           variants={staggerContainer}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {services.map((service, index) => (
-            <motion.div 
+            <motion.div
               key={index}
               variants={fadeInUp}
               whileHover={{ y: -5 }}
@@ -122,30 +123,28 @@ export default function Services() {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-6 pt-6 border-t border-[#2a2a2a]">
-                  <button className="text-[#C4A962] text-sm font-medium hover:underline flex items-center">
-                    Learn more
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
-                </div>
               </Tilt>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* CTA at bottom */}
-        <motion.div 
+        {/* CTA Button */}
+        <motion.div
           variants={fadeInUp}
           className="mt-20 text-center"
         >
           <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
             Have a special project in mind? Our team is ready to bring your vision to life with custom solutions tailored to your needs.
           </p>
-          <button className="bg-[#C4A962] hover:bg-[#d8b970] text-[#111111] font-medium py-3 px-8 rounded-full transition-all duration-300 shadow-md hover:shadow-lg">
+          <Link
+            to="contact"
+            smooth={true}
+            duration={800}
+            offset={-80}
+            className="bg-[#C4A962] hover:bg-[#d8b970] text-[#111111] font-medium py-3 px-8 rounded-full transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer inline-block"
+          >
             Get a Free Consultation
-          </button>
+          </Link>
         </motion.div>
       </motion.div>
     </section>
