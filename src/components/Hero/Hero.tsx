@@ -10,18 +10,16 @@ export default function Hero() {
     { value: "24/7", label: "SUPPORT" }
   ];
 
-  // Handle video load with fade-in effect
-  const handleVideoLoad = (e: React.SyntheticEvent<HTMLVideoElement>) => {
-    e.currentTarget.style.opacity = '1';
-  };
-
   return (
     <section id="home" className="relative h-screen w-full overflow-hidden">
       {/* Critical CSS Inlined */}
       <style>{`
         #home video {
           opacity: 0;
-          transition: opacity 1s ease;
+          transition: opacity 1.5s ease;
+        }
+        #home video.visible {
+          opacity: 1;
         }
         @media (max-width: 768px) {
           .hero-stats {
@@ -30,26 +28,23 @@ export default function Hero() {
         }
       `}</style>
 
-      {/* Optimized Background Video */}
-      <div className="absolute inset-0 z-0">
+      {/* Optimized Full Quality Video */}
+      <div className="absolute inset-0 z-0 bg-black">
         <video
           autoPlay
           loop
           muted
           playsInline
           className="w-full h-full object-cover"
-          onLoadedData={handleVideoLoad}
-          preload="metadata"  // Changed from auto to metadata
-          poster={ecoscapeLogo} // Using logo as video poster
+          onLoadedData={(e) => {
+            e.currentTarget.classList.add('visible');
+          }}
+          preload="auto"
         >
+          {/* WEBM version for better compression */}
+          <source src={constructionVideo.replace('.mp4', '.webm')} type="video/webm" />
+          {/* Fallback to MP4 */}
           <source src={constructionVideo} type="video/mp4" />
-          {/* Fallback image if video fails to load */}
-          <img 
-            src={ecoscapeLogo} 
-            alt="Construction background" 
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
         </video>
         <div className="absolute inset-0 bg-black/60" />
       </div>
@@ -65,7 +60,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left"
           >
-            {/* Logo with optimized loading */}
+            {/* Logo */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -76,10 +71,8 @@ export default function Hero() {
                 src={ecoscapeLogo}
                 alt="Ecoscape Logo"
                 className="w-[150px] sm:w-[220px] md:w-[260px] h-auto object-contain drop-shadow-lg mx-auto lg:mx-0 mb-3"
-                loading="eager" // Important content loads first
+                loading="eager"
                 decoding="async"
-                // Corrected from fetchpriority to fetchPriority
-                fetchPriority="high"
               />
               <p className="text-[#C4A962] font-semibold uppercase text-sm sm:text-base tracking-wider">
                 Build Joy, Build Dreams • Developers
