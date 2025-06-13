@@ -6,13 +6,13 @@ const reviews = [
     id: 1,
     name: "Toyota Showroom",
     role: "Balasore",
-    content: "Ecoscape designed a showroom that makes Toyota's technology shine! The interactive displays and seamless customer flow increased our test drives by 35%.",
+    content: "xyz",
     rating: 5
   },
   {
     id: 2,
-    name: "Sandipan Sarkar",
-    role: "xyz",
+    name: "Toyota Showroom",
+    role: "Baripada",
     content: "xyz",
     rating: 5
   },
