@@ -59,44 +59,48 @@ interface Project {
   additionalImages?: string[];
   subcategory?: InteriorSubcategory;
   category: 'Residential' | 'Commercial' | 'Interior';
+  status?: 'ongoing' | 'completed';
 }
 
 const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
   Residential: [
     {
-      image: img38,
-      name: 'Hero Showroom',
-      description: 'xyz',
-      additionalImages: [img48, img47],
-      category: 'Residential'
-    },
-
-    {
       image: img46,
       name: 'Electronic Hub',
-      description: 'xyz',
-      additionalImages: [img39, img40, img41, img42, img43, img44, img45],
-      category: 'Residential'
+      description: 'A modern showroom with sleek design and premium finishes.',
+      additionalImages: [img48, img47],
+      category: 'Commercial',
+      status: 'ongoing'
     },
-
+    {
+      image: img38,
+      name: 'Hero Showroom',
+      description: 'A cutting-edge electronics store with innovative display solutions.',
+      additionalImages: [img39, img40, img41, img42, img43, img44, img45],
+      category: 'Commercial',
+      status: 'ongoing'
+    },
     {
       image: project3,
       name: 'Rajendra Behera',
       description: 'Luxury villa with premium finishes and custom architectural details.',
       additionalImages: [img13, img14],
-      category: 'Residential'
+      category: 'Residential',
+      status: 'completed'
     },
     {
       image: project4,
       name: 'Sankar Sen',
       description: 'Elegant residence with traditional influences and modern comforts.',
-      category: 'Residential'
+      category: 'Residential',
+      status: 'completed'
     },
     {
       image: img5,
       name: 'Sandipan Sarkar',
       description: 'Compact urban home with smart space utilization and minimalist design.',
-      category: 'Residential'
+      category: 'Residential',
+      status: 'completed'
     }
   ],
   Commercial: [
@@ -105,21 +109,24 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       name: 'Toyota Showroom-Balasore',
       description: 'A sleek and professional corporate office space designed for the Toyota brand, blending functionality with modern aesthetics. This workspace features open-plan collaborative areas, private meeting rooms, and state-of-the-art facilities tailored for productivity and innovation. The design emphasizes clean lines, brand-themed elements, and a welcoming atmosphere for both staff and clients.',
       additionalImages: [img9, img10, img12, img11, img15],
-      category: 'Commercial'
+      category: 'Commercial',
+      status: 'completed'
     },
     {
       image: img34,
       name: 'Toyota Showroom-Baripada',
       description: 'A sleek and professional corporate office space designed for the Toyota brand, blending functionality with modern aesthetics. This workspace features open-plan collaborative areas, private meeting rooms, and state-of-the-art facilities tailored for productivity and innovation. The design emphasizes clean lines, brand-themed elements, and a welcoming atmosphere for both staff and clients.',
       additionalImages: [img35, img36, img37],
-      category: 'Commercial'
+      category: 'Commercial',
+      status: 'completed'
     },
     {
       image: bapiBhai,
       name: 'Shree Nivas-Appartment',
       description: 'A beautiful residential property with modern amenities and elegant design.',
       additionalImages: [img18, img16],
-      category: 'Commercial'
+      category: 'Commercial',
+      status: 'completed'
     },
   ],
   Interior: [
@@ -129,56 +136,64 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       name: '',
       description: 'A cozy and tranquil bedroom retreat designed for comfort and relaxation. Featuring soft lighting, warm textures, and a harmonious color palette, the space creates a serene ambiance ideal for unwinding. Thoughtful furnishings, ample storage, and subtle design accents ensure both style and functionality, making it a perfect personal sanctuary.',
       subcategory: 'Bedroom',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     },
     {
       image: img21,
       name: '',
       description: 'A cozy and tranquil bedroom retreat designed for comfort and relaxation. Featuring soft lighting, warm textures, and a harmonious color palette, the space creates a serene ambiance ideal for unwinding. Thoughtful furnishings, ample storage, and subtle design accents ensure both style and functionality, making it a perfect personal sanctuary.',
       subcategory: 'Bedroom',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     },
     {
       image: img22,
       name: '',
       description: 'Luxurious sleeping quarters with premium bedding and decor.',
       subcategory: 'Bedroom',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     },
     {
       image: img26,
       name: '',
       description: 'First design option for primary bedroom with neutral palette.',
       subcategory: 'Bedroom',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     },
     {
       image: img27,
       name: '',
       description: 'Second design option with warmer tones and textured finishes.',
       subcategory: 'Bedroom',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     },
     {
       image: img28,
       name: '',
       description: 'Third design option featuring bold colors and modern art.',
       subcategory: 'Bedroom',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     },
     {
       image: img29,
       name: '',
       description: 'First option for accommodations with minimalist design.',
       subcategory: 'Bedroom',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     },
     {
       image: img30,
       name: '',
       description: 'Second option with more traditional furnishings and decor.',
       subcategory: 'Bedroom',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     },
     
     // Dining projects
@@ -187,14 +202,16 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       name: '',
       description: 'Elegant dining space for entertaining guests and family gatherings.',
       subcategory: 'Dining',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     },
     {
       image: img24,
       name: '',
       description: 'Casual dining area with comfortable seating and natural light.',
       subcategory: 'Dining',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     },
     
     // Living Room projects
@@ -203,21 +220,24 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       name: '',
       description: 'Modern living room with elegant furniture and lighting fixtures.',
       subcategory: 'Living Room',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     },
     {
       image: img31,
       name: '',
       description: 'Home theater with premium audio-visual equipment and seating.',
       subcategory: 'Living Room',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     },
     {
       image: img32,
       name: '',
       description: 'Spacious living area with modern design elements.',
       subcategory: 'Living Room',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     },
     
     // Office projects
@@ -226,14 +246,16 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       name: '',
       description: 'Contemporary Office space with modern furniture and decor.',
       subcategory: 'Office',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     },
     {
       image: img19,
       name: '',
       description: 'Beautifully crafted office with intricate designs and decorations.',
       subcategory: 'Office',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     },
     
     // Puja Room projects
@@ -242,7 +264,8 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       name: '',
       description: 'Sacred space designed for worship and meditation.',
       subcategory: 'Puja Room',
-      category: 'Interior'
+      category: 'Interior',
+      status: 'completed'
     }
   ],
 };
@@ -284,6 +307,68 @@ const ProtectedImage = ({ src, alt, className = '', priority = false }: Protecte
   );
 };
 
+const ProjectCard = ({ 
+  project, 
+  index,
+  openModal 
+}: { 
+  project: Project; 
+  index: number;
+  openModal: (project: Project) => void;
+}) => (
+  <motion.div 
+    variants={{
+      hidden: { opacity: 0, y: 50 },
+      show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+    }}
+    className="overflow-hidden rounded-lg shadow-lg relative group cursor-pointer h-96"
+    onClick={(e) => {
+      e.stopPropagation();
+      openModal(project);
+    }}
+    onContextMenu={(e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }}
+  >
+    <div className="relative w-full h-full flex flex-col">
+      <div className="relative flex-1 overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center bg-black">
+          <ProtectedImage 
+            src={project.image} 
+            alt={`${project.category} Work ${index + 1}`}
+            priority={index < 6}
+          />
+        </div>
+      </div>
+      
+      <div className="bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 h-32 flex flex-col justify-end">
+        <h3 className="text-white text-xl font-bold mb-1 line-clamp-2">
+          {project.category === 'Interior' && !project.name 
+            ? '' 
+            : project.name || `${project.category} Project`}
+        </h3>
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-[#C4A962] text-sm capitalize">
+            {project.category}
+            {project.subcategory ? ` • ${project.subcategory}` : ''}
+          </span>
+          {project.status === 'ongoing' && (
+            <span className="bg-yellow-500 text-black text-xs px-2 py-1 rounded-full">
+              Ongoing
+            </span>
+          )}
+        </div>
+        <button
+          className="bg-[#C4A962] text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-[#D4B972] transition-colors w-full"
+        >
+          View Details
+        </button>
+      </div>
+    </div>
+  </motion.div>
+);
+
 export default function Projects() {
   const [selected, setSelected] = useState<Category>('All');
   const [selectedInteriorSubcategory, setSelectedInteriorSubcategory] = useState<InteriorSubcategory | 'All'>('All');
@@ -291,6 +376,7 @@ export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [showAllProjects, setShowAllProjects] = useState(false);
   const loadedImages = useRef<Set<string>>(new Set());
   const [categoryReady, setCategoryReady] = useState<Record<Category, boolean>>({
     All: false,
@@ -357,25 +443,21 @@ export default function Projects() {
     setIsModalOpen(true);
     setCurrentImageIndex(0);
     document.body.style.overflow = 'hidden';
-    // Push a new state to history when modal opens
     window.history.pushState({ modalOpen: true }, '');
   }, []);
 
   const closeModal = useCallback(() => {
     setIsModalOpen(false);
     document.body.style.overflow = 'auto';
-    // Remove the state we added when closing modal
     if (window.history.state?.modalOpen) {
       window.history.back();
     }
   }, []);
 
-  // Handle back button for mobile
   useEffect(() => {
     const handlePopState = () => {
       if (isModalOpen) {
         closeModal();
-        // Push another state to prevent going back further
         window.history.pushState(null, '', window.location.pathname);
       }
     };
@@ -401,6 +483,7 @@ export default function Projects() {
     
     setIsLoading(true);
     setSelected(category);
+    setShowAllProjects(false);
     
     if (categoryReady[category]) {
       setIsLoading(false);
@@ -436,6 +519,15 @@ export default function Projects() {
     return projectsData[selected].filter(project => project.subcategory === selectedInteriorSubcategory);
   }, [selected, selectedInteriorSubcategory]);
 
+  const getOngoingProjects = useCallback(() => {
+    return allProjects.filter(project => project.status === 'ongoing');
+  }, []);
+
+  const getCompletedProjects = useCallback(() => {
+    const filtered = getFilteredProjects().filter(project => project.status !== 'ongoing');
+    return showAllProjects ? filtered : filtered.slice(0, 6);
+  }, [getFilteredProjects, showAllProjects]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isModalOpen) return;
@@ -470,11 +562,6 @@ export default function Projects() {
     }
   };
 
-  const projectItem: Variants = {
-    hidden: { opacity: 0, y: 50 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-  };
-
   const tabs: Category[] = ['All', 'Residential', 'Commercial', 'Interior'];
   const interiorSubcategories: (InteriorSubcategory | 'All')[] = ['All', 'Bedroom', 'Dining', 'Living Room', 'Office', 'Puja Room'];
 
@@ -487,127 +574,138 @@ export default function Projects() {
         className="max-w-6xl mx-auto"
       >
         <motion.h2 
-          variants={projectItem}
+          variants={{
+            hidden: { opacity: 0, y: 50 },
+            show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+          }}
           className="text-4xl md:text-5xl font-serif text-[#C4A962] mb-12 text-center"
         >
           Our Works
         </motion.h2>
 
-        <div className="flex justify-center mb-10 gap-4 flex-wrap">
-          {tabs.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => handleCategoryChange(tab)}
-              className={`px-5 py-2 rounded-full border border-[#C4A962] text-sm font-semibold transition-all duration-300 ${
-                selected === tab ? "bg-[#C4A962] text-black" : "text-[#C4A962] hover:bg-[#C4A962]/20"
-              } ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
-              disabled={isLoading}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+        {/* Ongoing Projects Section */}
+        <motion.div 
+          variants={{
+            hidden: { opacity: 0 },
+            show: { opacity: 1, transition: { duration: 0.6 } }
+          }}
+          className="mb-20"
+        >
+          <h3 className="text-2xl md:text-3xl font-serif text-[#C4A962] mb-8 text-center">
+            Ongoing Projects
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {getOngoingProjects().map((project, index) => (
+              <ProjectCard 
+                key={`ongoing-${index}`}
+                project={project}
+                index={index}
+                openModal={openModal}
+              />
+            ))}
+          </div>
+        </motion.div>
 
-        {selected === 'Interior' && (
-          <div className="flex justify-center mb-6 gap-2 flex-wrap">
-            {interiorSubcategories.map((subcategory) => (
+        {/* Completed Projects Section */}
+        <motion.div 
+          variants={{
+            hidden: { opacity: 0 },
+            show: { opacity: 1, transition: { duration: 0.6 } }
+          }}
+        >
+          <h3 className="text-2xl md:text-3xl font-serif text-[#C4A962] mb-8 text-center">
+            Completed Projects
+          </h3>
+
+          <div className="flex justify-center mb-10 gap-4 flex-wrap">
+            {tabs.map((tab) => (
               <button
-                key={subcategory}
-                onClick={() => handleInteriorSubcategoryChange(subcategory)}
-                className={`px-4 py-1 rounded-full border border-[#C4A962] text-xs font-semibold transition-all duration-300 ${
-                  selectedInteriorSubcategory === subcategory ? "bg-[#C4A962] text-black" : "text-[#C4A962] hover:bg-[#C4A962]/20"
-                }`}
+                key={tab}
+                onClick={() => handleCategoryChange(tab)}
+                className={`px-5 py-2 rounded-full border border-[#C4A962] text-sm font-semibold transition-all duration-300 ${
+                  selected === tab ? "bg-[#C4A962] text-black" : "text-[#C4A962] hover:bg-[#C4A962]/20"
+                } ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                disabled={isLoading}
               >
-                {subcategory}
+                {tab}
               </button>
             ))}
           </div>
-        )}
 
-        <div className="relative min-h-[500px]">
-          <AnimatePresence mode="wait">
-            {isLoading ? (
-              <motion.div
-                key="loading"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="absolute inset-0 flex justify-center items-center"
-              >
-                <div className="flex flex-col items-center">
-                  <div className="relative">
-                    <div className="w-16 h-16 border-4 border-[#C4A962] border-t-transparent rounded-full animate-spin"></div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-8 h-8 bg-[#C4A962] rounded-full animate-pulse"></div>
-                    </div>
-                  </div>
-                  <p className="mt-4 text-[#C4A962]">Loading projects...</p>
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="content"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <motion.div 
-                  variants={container}
-                  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+          {selected === 'Interior' && (
+            <div className="flex justify-center mb-6 gap-2 flex-wrap">
+              {interiorSubcategories.map((subcategory) => (
+                <button
+                  key={subcategory}
+                  onClick={() => handleInteriorSubcategoryChange(subcategory)}
+                  className={`px-4 py-1 rounded-full border border-[#C4A962] text-xs font-semibold transition-all duration-300 ${
+                    selectedInteriorSubcategory === subcategory ? "bg-[#C4A962] text-black" : "text-[#C4A962] hover:bg-[#C4A962]/20"
+                  }`}
                 >
-                  {getFilteredProjects().map((project: Project, index: number) => (
-                    <motion.div 
-                      key={`${project.category}-${index}`}
-                      variants={projectItem}
-                      className="overflow-hidden rounded-lg shadow-lg relative group cursor-pointer h-96"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openModal(project);
-                      }}
-                      onContextMenu={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                      }}
-                    >
-                      <div className="relative w-full h-full flex flex-col">
-                        <div className="relative flex-1 overflow-hidden">
-                          <div className="absolute inset-0 flex items-center justify-center bg-black">
-                            <ProtectedImage 
-                              src={project.image} 
-                              alt={`${project.category} Work ${index + 1}`}
-                              priority={index < 6} // Load first 6 images eagerly
-                            />
-                          </div>
-                        </div>
-                        
-                        <div className="bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 h-32 flex flex-col justify-end">
-                          <h3 className="text-white text-xl font-bold mb-1 line-clamp-2">
-                            {project.category === 'Interior' && !project.name 
-                              ? '' 
-                              : project.name || `${project.category} Project`}
-                          </h3>
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="text-[#C4A962] text-sm capitalize">
-                              {project.category}
-                              {project.subcategory ? ` • ${project.subcategory}` : ''}
-                            </span>
-                          </div>
-                          <button
-                            className="bg-[#C4A962] text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-[#D4B972] transition-colors w-full"
-                          >
-                            View Details
-                          </button>
-                        </div>
+                  {subcategory}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className="relative min-h-[500px]">
+            <AnimatePresence mode="wait">
+              {isLoading ? (
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0 flex justify-center items-center"
+                >
+                  <div className="flex flex-col items-center">
+                    <div className="relative">
+                      <div className="w-16 h-16 border-4 border-[#C4A962] border-t-transparent rounded-full animate-spin"></div>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-8 h-8 bg-[#C4A962] rounded-full animate-pulse"></div>
                       </div>
-                    </motion.div>
-                  ))}
+                    </div>
+                    <p className="mt-4 text-[#C4A962]">Loading projects...</p>
+                  </div>
                 </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+              ) : (
+                <motion.div
+                  key="content"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div 
+                    variants={container}
+                    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+                  >
+                    {getCompletedProjects().map((project, index) => (
+                      <ProjectCard 
+                        key={`completed-${index}`}
+                        project={project}
+                        index={index}
+                        openModal={openModal}
+                      />
+                    ))}
+                  </motion.div>
+
+                  {!showAllProjects && getFilteredProjects().length > 6 && (
+                    <div className="text-center mt-10">
+                      <button
+                        onClick={() => setShowAllProjects(true)}
+                        className="bg-transparent border border-[#C4A962] text-[#C4A962] px-6 py-3 rounded-md text-sm font-medium hover:bg-[#C4A962]/10 transition-colors"
+                      >
+                        View More Projects
+                      </button>
+                    </div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </motion.div>
       </motion.div>
 
       {isModalOpen && selectedProject && (
@@ -624,7 +722,7 @@ export default function Projects() {
             onClick={(e) => e.stopPropagation()}
             style={{ maxHeight: '90vh' }}
           >
-            {/* Mobile close button (always visible on mobile) */}
+            {/* Mobile close button */}
             <button 
               onClick={closeModal}
               className="lg:hidden absolute top-2 right-2 z-50 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
@@ -635,7 +733,7 @@ export default function Projects() {
               </svg>
             </button>
 
-            {/* Desktop close button (only visible on desktop) */}
+            {/* Desktop close button */}
             <button 
               onClick={closeModal}
               className="hidden lg:block absolute top-4 lg:top-[120px] right-4 z-50 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
@@ -710,6 +808,19 @@ export default function Projects() {
                     {selectedProject.subcategory ? ` • ${selectedProject.subcategory}` : ''}
                   </p>
                 </div>
+
+                {selectedProject.status && (
+                  <div className="border-t border-gray-200 pt-4 mb-4">
+                    <h4 className="text-sm font-semibold text-gray-800 mb-1">Status</h4>
+                    <p className="text-gray-600 text-sm capitalize">
+                      {selectedProject.status === 'ongoing' ? (
+                        <span className="text-yellow-600">In Progress</span>
+                      ) : (
+                        <span className="text-green-600">Completed</span>
+                      )}
+                    </p>
+                  </div>
+                )}
               </div>
 
               <button

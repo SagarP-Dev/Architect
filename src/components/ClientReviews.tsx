@@ -4,22 +4,22 @@ import { motion } from 'framer-motion';
 const reviews = [
   {
     id: 1,
-    name: "xyz",
-    role: "xyz",
-    content: "xyz...!",
+    name: "Toyota Showroom",
+    role: "Balasore",
+    content: "Ecoscape designed a showroom that makes Toyota's technology shine! The interactive displays and seamless customer flow increased our test drives by 35%.",
     rating: 5
   },
   {
     id: 2,
-    name: "xyz",
+    name: "Sandipan Sarkar",
     role: "xyz",
-    content: "xyz...!",
+    content: "xyz",
     rating: 5
   },
   {
     id: 3,
-    name: "xyz",
-    role: "xyz",
+    name: "Shree Nivas Apartment",
+    role: "Apartment",
     content: "xyz...!",
     rating: 4
   }
