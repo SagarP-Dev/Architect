@@ -67,7 +67,7 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
     {
       image: img46,
       name: 'Electronic Hub',
-      description: 'A modern showroom with sleek design and premium finishes.',
+      description: 'XYZ',
       additionalImages: [img48, img47],
       category: 'Commercial',
       status: 'ongoing'
@@ -75,7 +75,7 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
     {
       image: img38,
       name: 'Hero Showroom',
-      description: 'A cutting-edge electronics store with innovative display solutions.',
+      description: 'XYZ',
       additionalImages: [img39, img40, img41, img42, img43, img44, img45],
       category: 'Commercial',
       status: 'ongoing'
