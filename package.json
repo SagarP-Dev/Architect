@@ -7,6 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "optimize-assets": "npm run optimize-images && npm run optimize-videos",
+  "optimize-images": "convert assets/*.{png,jpg} -quality 85 -format webp optimized-assets/",
+  "optimize-videos": "ffmpeg -i assets/*.mp4 -c:v libvpx-vp9 -crf 30 -b:v 0 optimized-assets/output.webm",
     "preview": "vite preview"
   },
   "dependencies": {
