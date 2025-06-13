@@ -1,42 +1,35 @@
 // components/Header.tsx
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react'; // Removed Instagram import since it's not used here
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
 import MobileMenu from './MobileMenu';
 import SocialLinks from './SocialLinks';
-
-const Logo = () => {
-  const [logoError, setLogoError] = useState(false);
-  const logoPath = '/WhatsApp Image 2025-03-31 at 11.55.57_354e1db8.jpg';
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="flex items-center justify-center w-16 h-16 rounded-full bg-[#C4A962] border-2 border-white/20 hover:border-[#C4A962] transition-all duration-300"
-    >
-      {!logoError ? (
-        <img 
-          src={logoPath}
-          alt="Ecoscape Logo" 
-          className="w-full h-full rounded-full object-cover p-1"
-          onError={() => setLogoError(true)}
-        />
-      ) : (
-        <span className="text-white font-bold text-xl tracking-tighter">EC</span>
-      )}
-    </motion.div>
-  );
-};
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      
+      // Update active section based on scroll position
+      const sections = ['home', 'our-works', 'services', 'reviews', 'about', 'contact'];
+      const scrollPosition = window.scrollY + 100;
+      
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const offsetHeight = element.offsetHeight;
+          
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -46,8 +39,11 @@ export default function Header() {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {  
     e.preventDefault();
     const href = e.currentTarget.getAttribute('href');
-    if (href) {
-      const element = document.querySelector(href);
+    if (href && href.startsWith('#')) {
+      const section = href.substring(1);
+      setActiveSection(section);
+      
+      const element = document.getElementById(section);
       if (element) {
         const offset = 80;
         const elementPosition = element.getBoundingClientRect().top;
@@ -62,56 +58,85 @@ export default function Header() {
     setIsMenuOpen(false);
   };
 
+  const navItems = [
+  { id: 'home', label: 'Home' },
+  { id: 'about', label: 'About' },
+  { id: 'services', label: 'Services' },
+  { id: 'our-works', label: 'Our Works' },
+  { id: 'reviews', label: 'Reviews' },
+];
+
   return (
     <>
       <SocialLinks />
 
       <nav
-        className={`fixed w-full py-4 px-6 lg:px-12 flex justify-between items-center z-40 transition-all duration-500 ${
-          isScrolled ? 'bg-gray-900/95 backdrop-blur-sm shadow-md' : 'bg-transparent'
+        className={`fixed w-full py-4 px-6 lg:px-12 flex justify-between items-center z-50 transition-all duration-500 ${
+          isScrolled ? 'bg-gray-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
         }`}
       >
-        <Logo />
+        {/* Empty div to maintain flex spacing */}
+        <div className="w-[40px]"></div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="hidden md:flex items-center gap-8"
+          className="hidden md:flex items-center gap-6"
         >
-          {['home', 'our-works', 'services', 'about'].map((item) => (
+          {navItems.map((item) => (
+            <div key={item.id} className="relative">
+              <a 
+                href={`#${item.id}`}
+                className={`nav-link px-3 py-2 text-white/90 hover:text-[#C4A962] transition-all duration-300 text-sm uppercase tracking-wider font-medium ${
+                  activeSection === item.id ? 'text-[#C4A962]' : ''
+                }`}
+                onClick={handleNavClick}
+              >
+                {item.label}
+                {activeSection === item.id && (
+                  <motion.span 
+                    layoutId="nav-underline"
+                    className="absolute left-0 bottom-0 w-full h-0.5 bg-[#C4A962]"
+                    transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+              </a>
+            </div>
+          ))}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+          >
             <a 
-              key={item}
-              href={`#${item}`} 
-              className="nav-link text-white/90 hover:text-[#C4A962] transition-all duration-300 text-sm uppercase tracking-wider font-medium"
+              href="#contact" 
+              className="px-6 py-2.5 bg-gradient-to-r from-[#C4A962] to-[#E8D9A6] text-gray-900 uppercase tracking-wider text-xs font-bold hover:bg-white transition-all duration-300 rounded-full ml-2 border border-transparent hover:border-[#C4A962] shadow-lg hover:shadow-[#C4A962]/30"
               onClick={handleNavClick}
             >
-              {item === 'our-works' ? 'Our Works' : item.charAt(0).toUpperCase() + item.slice(1)}
+              Contact
             </a>
-          ))}
-          <a 
-            href="#contact" 
-            className="px-6 py-2 bg-[#C4A962] text-gray-900 uppercase tracking-wider text-xs font-bold hover:bg-white transition-all duration-300 rounded-full ml-4 border border-transparent hover:border-[#C4A962]"
-            onClick={handleNavClick}
-          >
-            Contact
-          </a>
+          </motion.div>
         </motion.div>
 
-        <button 
-          className="md:hidden text-[#C4A962] p-2 rounded-full hover:bg-white/10 transition-all duration-300"
+        <motion.button 
+          className="md:hidden p-2 rounded-full"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
         >
           {isMenuOpen ? (
-            <X size={24} className="text-white" />
+            <X size={28} className="text-[#C4A962] stroke-[2.5]" />
           ) : (
-            <Menu size={24} className="text-[#C4A962]" />
+            <Menu size={28} className="text-[#C4A962] stroke-[2.5]" />
           )}
-        </button>
+        </motion.button>
       </nav>
 
-      {isMenuOpen && <MobileMenu onClose={() => setIsMenuOpen(false)} />}
+      <AnimatePresence>
+        {isMenuOpen && <MobileMenu onClose={() => setIsMenuOpen(false)} activeSection={activeSection} />}
+      </AnimatePresence>
     </>
   );
 }

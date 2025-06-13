@@ -36,6 +36,18 @@ import img34 from '../assets/WhatsApp Image 2025-04-13 at 17.25.11_0694b909.jpg'
 import img35 from '../assets/WhatsApp Image 2025-04-13 at 17.25.09_856231bc.jpg';
 import img36 from '../assets/WhatsApp Image 2025-04-13 at 17.25.10_7337cbc1.jpg';
 import img37 from '../assets/WhatsApp Image 2025-04-13 at 17.25.10_73684546.jpg';
+import img38 from '../assets/WhatsApp Image 2025-06-11 at 20.30.40_13ffd703.jpg';
+import img39 from '../assets/WhatsApp Image 2025-06-11 at 20.30.45_27c50deb.jpg';
+import img40 from '../assets/WhatsApp Image 2025-06-11 at 20.30.44_bec39354.jpg';
+import img41 from '../assets/WhatsApp Image 2025-06-11 at 20.30.44_91392386.jpg';
+import img42 from '../assets/WhatsApp Image 2025-06-11 at 20.30.44_235dac89.jpg';
+import img43 from '../assets/WhatsApp Image 2025-06-11 at 20.30.43_7faed58a.jpg';
+import img44 from '../assets/WhatsApp Image 2025-06-11 at 20.30.42_9bdd8761.jpg';
+import img45 from '../assets/WhatsApp Image 2025-06-11 at 20.30.42_fe73bfd4.jpg';
+import img46 from '../assets/WhatsApp Image 2025-06-11 at 20.31.21_80695e22.jpg';
+import img47 from '../assets/WhatsApp Image 2025-06-11 at 20.31.20_152c0e44.jpg';
+import img48 from '../assets/WhatsApp Image 2025-06-11 at 20.31.19_066c2ce5.jpg';
+
 
 type Category = 'All' | 'Residential' | 'Commercial' | 'Interior';
 type InteriorSubcategory = 'Bedroom' | 'Dining' | 'Living Room' | 'Office' | 'Puja Room';
@@ -51,6 +63,22 @@ interface Project {
 
 const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
   Residential: [
+    {
+      image: img38,
+      name: 'Hero Showroom',
+      description: 'xyz',
+      additionalImages: [img48, img47],
+      category: 'Residential'
+    },
+
+    {
+      image: img46,
+      name: 'Electronic Hub',
+      description: 'xyz',
+      additionalImages: [img39, img40, img41, img42, img43, img44, img45],
+      category: 'Residential'
+    },
+
     {
       image: project3,
       name: 'Rajendra Behera',
