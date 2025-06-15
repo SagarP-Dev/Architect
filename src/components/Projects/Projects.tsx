@@ -47,6 +47,8 @@ import img45 from '../assets/WhatsApp Image 2025-06-11 at 20.30.42_fe73bfd4.jpg'
 import img46 from '../assets/WhatsApp Image 2025-06-11 at 20.31.21_80695e22.jpg';
 import img47 from '../assets/WhatsApp Image 2025-06-11 at 20.31.20_152c0e44.jpg';
 import img48 from '../assets/WhatsApp Image 2025-06-11 at 20.31.19_066c2ce5.jpg';
+import img49 from '../assets/WhatsApp Image 2025-06-14 at 11.26.55_79580ecf.jpg';
+import img50 from '../assets/WhatsApp Image 2025-06-14 at 11.31.46_58691cc1.jpg';
 
 
 type Category = 'All' | 'Residential' | 'Commercial' | 'Interior';
@@ -77,6 +79,14 @@ const projectsData: Record<Exclude<Category, 'All'>, Project[]> = {
       name: 'Hero Showroom',
       description: 'XYZ',
       additionalImages: [img39, img40, img41, img42, img43, img44, img45],
+      category: 'Commercial',
+      status: 'ongoing'
+    },
+    {
+      image: img49,
+      name: 'Honda Bigwing',
+      description: 'XYZ',
+      additionalImages: [img50],
       category: 'Commercial',
       status: 'ongoing'
     },
